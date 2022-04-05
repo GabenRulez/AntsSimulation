@@ -8,3 +8,14 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: psf/black@stable
+
+      - name: Installing Python dependencies
+        run: |
+          pip install pipenv
+          pipenv install
+
+      - uses: wearerequired/lint-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          black: true
+          auto_fix: true
