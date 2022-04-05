@@ -8,6 +8,7 @@ gameData = {
     "running": False,
 }
 
+
 def main():
     setup()
 
@@ -26,7 +27,7 @@ def loop():
         if event.type == pygame.QUIT:
             gameData["running"] = False
 
-    WIN.fill((127,127,127))
+    WIN.fill((127, 127, 127))
     pygame.display.update()
 
 
