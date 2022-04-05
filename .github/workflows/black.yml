@@ -7,17 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v1
         with:
-          python-version: '3.x'
+          python-version: 3.8
 
       - name: Installing Python dependencies
         run: |
-          pip install pipenv
-          pipenv install
+          pip install -r requirements.txt
+          pip install black flake8
 
       - uses: wearerequired/lint-action@v1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           black: true
+          flake8: true
           auto_fix: true
