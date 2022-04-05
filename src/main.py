@@ -6,7 +6,6 @@ pygame.display.set_caption("Ants Simulation")
 
 gameData = {
     "running": False,
-    "window": WIN
 }
 
 def main():
@@ -29,8 +28,6 @@ def loop():
 
     WIN.fill((127,127,127))
     pygame.display.update()
-
-def setup_pygame():
 
 
 if __name__ == "__main__":
