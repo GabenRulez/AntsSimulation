@@ -12,4 +12,11 @@ def distanceToObject(self, otherPosition):
 
 
 def angleToPoint(self, otherPoint):
-    return math.atan((otherPoint.y - self.y) / (otherPoint.x - self.x))
+    tempAngle = math.atan((otherPoint.y - self.y)/(otherPoint.x - self.x))
+    if otherPoint.x < self.x:
+        return tempAngle + math.pi
+    else:
+        if otherPoint.y < self.y:
+            return tempAngle + 2*math.pi
+        else:
+            return tempAngle
