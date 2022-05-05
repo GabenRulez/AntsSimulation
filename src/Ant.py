@@ -35,10 +35,15 @@ class Ant:
         else:
             self.mark_return_trail()
 
-
-
     def decide(self):
-        # take self.holding_food = False into consideration
+        '''
+        Calculate an angle with a bit of randomness. Moving in this direction should yield a big chance of encountering the requested type of `Pheromones`.
+        '''
+
+        # Base your decision on whether you're holding food or not.
+        # If you are, then you should try to find a way to the nest.
+        # Otherwise, try to find a way to get closer to the food.
+
         # Detect pheromones in circular sector shape in front of the ant.
         detectedPheromones = self.worldMap.getPheromonesInCircularSector(self.position, self.direction, self.seeing_radius, self.seeing_angle)
 
