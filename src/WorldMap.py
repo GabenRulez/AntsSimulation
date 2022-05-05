@@ -77,7 +77,7 @@ class WorldMap:
         # return single piece of food and delete it from self.foods
         for food in self.foods:
             if midpoint.distanceToObject(food.position) <= radius:
-                self.foods.pop(food)
+                self.foods.remove(food)
                 return food
 
         return None
