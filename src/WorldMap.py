@@ -38,10 +38,17 @@ class WorldMap:
         self.pheromones.append(pheromone)
 
     def updatePheromones(self):
+        pheromonesToDiscard = []
         for pheromone in self.pheromones:
+            pheromone.strength -= 1
+            if pheromone.strength <= 0:
+                pheromonesToDiscard.append(pheromone)
             # Walk over all pheromones and update their strength.
             # Later we can change their position.
-            pass
+
+        for pheromone in pheromonesToDiscard:
+            self.pheromones.remove(pheromone)
+
 
     def addAnt(self, ant: Ant.Ant):
         self.ants.append(ant)
