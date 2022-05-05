@@ -16,6 +16,7 @@ class Ant:
         self.direction = 0
         self.radius = 1
         # self.age = 0
+        self.speed = 1
         self.holding_food = False
         self.worldMap = worldMap
 
@@ -36,8 +37,8 @@ class Ant:
     def setMap(self, worldMap: WorldMap):
         self.worldMap = worldMap
 
-    def decide(self, pheromoneList):
-        # take self.holding_food = False into consideration
+    def decide(self):
+        # take self.holding_food = False into consideration        
         if self.holding_food:
             pheromoneToTrack = PheromoneType.HOME
         else:
@@ -67,6 +68,12 @@ class Ant:
         return randomizedAngle 
 
     def move(self, direction):
+
+        oldPosition = self.popsition
+        moveAngle = self.direction + self.decide()
+        newPosition = Position(oldPosition.x + self.speed*math.cos(moveAngle), oldPosition.y + self.speed*math.sin(moveAngle))
+        self.position = newPosition
+        
         # wywołaj move na mapie
 
         # (Possible in the future) Check for obstacles on your path.
