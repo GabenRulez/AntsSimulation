@@ -1,6 +1,6 @@
 import numpy as np
 import WorldMap
-from Pheromone import getUnitedPheromoneAtCenterOfGravity
+from Pheromone import calculateAveragePheromonePosition
 import Position
 import math
 from PheromoneType import PheromoneType
