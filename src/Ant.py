@@ -28,6 +28,8 @@ class Ant:
         # Spróbuj podnieść jedzenie
         self.tryToTakeFood()
         # Na podstawie tego, czy TERAZ masz jedzenie, stwórz odpowiedniego feromona
+        self.move(self.decide())
+
         if self.holding_food:
             self.mark_food_trail()
         else:
