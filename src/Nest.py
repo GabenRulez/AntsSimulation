@@ -3,12 +3,10 @@ import WorldMap
 
 
 class Nest:
-    def __init__(self, position: Position):
+    def __init__(self, position: Position, worldMap: WorldMap.WorldMap):
         self.position = position
-        self.worldMap = None
-
-    def setMap(self, worldMap: WorldMap.WorldMap):
         self.worldMap = worldMap
+
 
     def update(self):
         # for every ant in radius - take it from the Map class
