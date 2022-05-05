@@ -12,7 +12,7 @@ class Ant:
         self.direction = 0
         # self.age = 0
         self.holding_food = False
-        self.worldMap  =  worldMap
+        self.worldMap = worldMap
 
     def update(self):
         # Na podstawie czy self.holding_food = True - wybierz kierunek do domu lub kierunek do jedzenia
@@ -32,8 +32,6 @@ class Ant:
         sensedPheromones = self.worldMap.getPheromonesInCircularSector()
         pheromoneCenter = getUnitedPheromoneAtCenterOfGravity(sensedPheromones)
 
-
-
         # Roll a dice and depending on the result:
         # Go right
         # Go left
@@ -43,7 +41,6 @@ class Ant:
 
         # Return the angle of "desired movement"
         # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
-
 
         pass
 
