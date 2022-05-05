@@ -53,13 +53,13 @@ class Ant:
             detectedPheromones, pheromoneToTrack
         )
 
-        pheromoneAngle = self.position.angleToPoint(centerOfPheromones.position)
-        weightedNormalDistributionSigma = RANDOMNESS_SIGMA / centerOfPheromones.strength
+        if centerOfPheromones is not None:
+            weightedNormalDistributionSigma = RANDOMNESS_SIGMA / centerOfPheromones.strength
+            return  np.random.normal(self.position.angleToPoint(centerOfPheromones.position), weightedNormalDistributionSigma, 1)           * math.pi
 
-        randomizedAngle = (
-            np.random.normal(pheromoneAngle, weightedNormalDistributionSigma, 1)
-            * math.pi
-        )
+
+        else:
+            return self.direction + np.random.uniform(low=-np.pi/2, high=np.pi/2)
         # Roll a dice and depending on the result:
         # Go right
         # Go left
@@ -70,7 +70,6 @@ class Ant:
         # Return the angle of "desired movement"
         # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
 
-        return randomizedAngle
 
     def move(self, moveDirection):
         self.position.add(
@@ -100,6 +99,7 @@ class Ant:
             self.mark_food_trail()
         else:
             self.mark_return_trail()
+
 
     def mark_food_trail(self):
         # Invoke when you have found food.
