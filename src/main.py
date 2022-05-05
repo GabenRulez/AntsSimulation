@@ -1,5 +1,4 @@
 import pygame
-from WorldMap import WorldMap
 import WorldMap
 from Position import Position
 
