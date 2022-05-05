@@ -16,6 +16,7 @@ class Ant:
         self.direction = 0
         self.radius = 1
         # self.age = 0
+        self.speed = 1
         self.holding_food = False
         self.worldMap = worldMap
 
@@ -36,7 +37,7 @@ class Ant:
     def setMap(self, worldMap: WorldMap):
         self.worldMap = worldMap
 
-    def decide(self, pheromoneList):
+    def decide(self):
         # take self.holding_food = False into consideration
         if self.holding_food:
             pheromoneToTrack = PheromoneType.HOME
@@ -50,7 +51,13 @@ class Ant:
             sensedPheromones, pheromoneToTrack
         )
 
-        randomSwerve = np.random.normal(0, RANDOMNESS_SIGMA, 1) * math.pi
+        pheromoneAngle = self.position.angleToPoint(pheromoneCenter.position)
+        weightedNormalDistributionSigma = RANDOMNESS_SIGMA / pheromoneCenter.strength
+
+        randomizedAngle = (
+            np.random.normal(pheromoneAngle, weightedNormalDistributionSigma, 1)
+            * math.pi
+        )
         # Roll a dice and depending on the result:
         # Go right
         # Go left
@@ -61,9 +68,18 @@ class Ant:
         # Return the angle of "desired movement"
         # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
 
-        pass
+        return randomizedAngle
 
     def move(self, direction):
+
+        oldPosition = self.popsition
+        moveAngle = self.direction + self.decide()
+        newPosition = Position(
+            oldPosition.x + self.speed * math.cos(moveAngle),
+            oldPosition.y + self.speed * math.sin(moveAngle),
+        )
+        self.position = newPosition
+
         # wywołaj move na mapie
 
         # (Possible in the future) Check for obstacles on your path.
@@ -110,7 +126,6 @@ class Ant:
 
         if foodToEat:
             self.holding_food = True
-            self.worldMap.removeFood(foodToEat)
 
     def putDownFood(self):
         self.holding_food = False

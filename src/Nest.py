@@ -13,4 +13,7 @@ class Nest:
     def update(self):
         # for every ant in radius - take it from the Map class
         # execute ant.putDownFood()
-        pass
+        ants = self.worldMap.ants
+        for ant in ants:
+            if self.position.distanceToObject(ant.position):
+                ant.putDownFood()
