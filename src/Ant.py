@@ -47,8 +47,8 @@ class Ant:
         # Detect pheromones in cone shape in front of the ant.
         # Take the angle from ant's `self.sense_angle`.
         sensedPheromones = self.worldMap.getPheromonesInCircularSector()
-        pheromoneCenter = getUnitedPheromoneAtCenterOfGravity(
-            sensedPheromones, pheromoneToTrack
+        centerOfPheromones = calculateAveragePheromonePosition(
+            detectedPheromones, pheromoneToTrack
         )
 
         pheromoneAngle = self.position.angleToPoint(pheromoneCenter.position)

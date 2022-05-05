@@ -14,7 +14,7 @@ class Pheromone:
         self.strength = startingStrength
 
 
-def getUnitedPheromoneAtCenterOfGravity(pheromones, trackedType):
+def calculateAveragePheromonePosition(pheromones, trackedType):
     if len(pheromones) == 0:
         return
 
