@@ -36,8 +36,6 @@ class Ant:
             self.mark_return_trail()
 
 
-    def setMap(self, worldMap: WorldMap):
-        self.worldMap = worldMap
 
     def decide(self):
         # take self.holding_food = False into consideration
