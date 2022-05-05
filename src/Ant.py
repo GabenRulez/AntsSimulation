@@ -1,6 +1,7 @@
 from WorldMap import WorldMap
 from Position import Position
 
+
 class Ant:
     def __init__(self, position: Position):
         self.pos = position
@@ -15,10 +16,10 @@ class Ant:
         # Rusz się self.move(kierunek)
         # Spróbuj podnieść jedzenie
         # Na podstawie tego, czy TERAZ masz jedzenie, stwórz odpowiedniego feromona
-        #self.age +=1
+        # self.age +=1
         pass
 
-    def setMap(self, worldMap:WorldMap):
+    def setMap(self, worldMap: WorldMap):
         self.worldMap = worldMap
 
     def decide(self):
@@ -51,7 +52,6 @@ class Ant:
 
         # Spawn a "ReturnPheromone" or "FoodPheromone" depending on the current state of "holding_food".
 
-
         # self.map.updateAntPosition(self, wantedPosition)
         pass
 
@@ -75,11 +75,10 @@ class Ant:
         pass
 
     def takeFood(self):
-        #foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
+        # foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
         # if the foodToEat is not null - change your type to "carrying food= true"
         # else do nothing
         pass
 
     def putDownFood(self):
         self.holding_food = False
-

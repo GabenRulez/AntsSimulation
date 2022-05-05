@@ -9,7 +9,7 @@ gameData = {
     "fps_limit": 60,
     "running": False,
     "clock": pygame.time.Clock(),
-    "worldMap": WorldMap(0, 0)
+    "worldMap": WorldMap(0, 0),
 }
 
 
@@ -34,11 +34,7 @@ def loop():
         if event.type == pygame.QUIT:
             gameData["running"] = False
 
-
-
     WIN.fill((63, 142, 252))
-
-
 
     pygame.display.update()
 
