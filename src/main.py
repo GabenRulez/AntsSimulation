@@ -17,7 +17,7 @@ gameData = {
     "screenWidth": 1920,
     "screenHeight": 1080,
     "window": None,
-    "antsNest": Nest.Nest(Position(100, 50))
+    "antsNest": Nest.Nest(Position(100, 50)),
 }
 
 
@@ -40,8 +40,9 @@ def setup():
     worldMap.addAnt(Ant(Position(150, 150), worldMap))
     worldMap.addAnt(Ant(Position(50, 150), worldMap))
 
-
-    gameData["window"] = pygame.display.set_mode((gameData["screenWidth"], gameData["screenHeight"]), flags=pygame.RESIZABLE)
+    gameData["window"] = pygame.display.set_mode(
+        (gameData["screenWidth"], gameData["screenHeight"]), flags=pygame.RESIZABLE
+    )
     updateScreenInfo()
 
 
@@ -60,23 +61,37 @@ def loop():
 
 
 def drawBackground():
-    BACKGROUND_COLOR = (0,0,0)
+    BACKGROUND_COLOR = (0, 0, 0)
     MAP_COLOR = (207, 136, 70)
 
     WIN.fill(BACKGROUND_COLOR)
-    pygame.draw.rect(gameData["window"], MAP_COLOR, (0, 0, gameData["worldMap"].width, gameData["worldMap"].height))
+    pygame.draw.rect(
+        gameData["window"],
+        MAP_COLOR,
+        (0, 0, gameData["worldMap"].width, gameData["worldMap"].height),
+    )
+
 
 def drawNest():
-    NEST_COLOR = (255,0,0)
-    pygame.draw.circle(gameData["window"], NEST_COLOR, (gameData["antsNest"].position.x, gameData["antsNest"].position.y), 10)
+    NEST_COLOR = (255, 0, 0)
+    pygame.draw.circle(
+        gameData["window"],
+        NEST_COLOR,
+        (gameData["antsNest"].position.x, gameData["antsNest"].position.y),
+        10,
+    )
+
 
 def drawFood():
-    FOOD_COLOR = (0,255,0)
+    FOOD_COLOR = (0, 255, 0)
     for food in gameData["worldMap"].foods:
-        pygame.draw.circle(gameData["window"], FOOD_COLOR, (food.position.x, food.position.y), 1)
+        pygame.draw.circle(
+            gameData["window"], FOOD_COLOR, (food.position.x, food.position.y), 1
+        )
+
 
 def drawAnts():
-    ANT_COLOR = (255,255,255)
+    ANT_COLOR = (255, 255, 255)
 
     def DrawArrow(x, y, angle=0):
         def rotate(pos, angle):
@@ -84,8 +99,12 @@ def drawAnts():
             angle *= -(np.pi / 180)
             cos_theta = np.cos(angle)
             sin_theta = np.sin(angle)
-            ret = ((cos_theta * (pos[0] - cen[0]) - sin_theta * (pos[1] - cen[1])) + cen[0],
-                   (sin_theta * (pos[0] - cen[0]) + cos_theta * (pos[1] - cen[1])) + cen[1])
+            ret = (
+                (cos_theta * (pos[0] - cen[0]) - sin_theta * (pos[1] - cen[1]))
+                + cen[0],
+                (sin_theta * (pos[0] - cen[0]) + cos_theta * (pos[1] - cen[1]))
+                + cen[1],
+            )
             return ret
 
         p0 = rotate((0 + x, -4 + y), angle + 90)
@@ -96,7 +115,6 @@ def drawAnts():
 
     for ant in gameData["worldMap"].ants:
         DrawArrow(ant.pos.x, ant.pos.y, ant.direction)
-
 
 
 def updateScreenInfo():
