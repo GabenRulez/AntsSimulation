@@ -6,6 +6,10 @@ class Position:
         self.x = x
         self.y = y
 
+    def add(self, x, y):
+        self.x += x
+        self.y += y
+
     def distanceToObject(self, otherPosition):
         return math.dist([self.x, self.y], [otherPosition.x, otherPosition.y])
 

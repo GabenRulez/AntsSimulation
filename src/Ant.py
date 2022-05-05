@@ -73,13 +73,11 @@ class Ant:
         return randomizedAngle
 
     def move(self, moveDirection):
-
-        oldPosition = self.position
-        newPosition = Position.Position(
-            oldPosition.x + self.speed * math.cos(moveDirection),
-            oldPosition.y + self.speed * math.sin(moveDirection),
+        self.position.add(
+             self.speed * math.cos(moveDirection),
+             self.speed * math.sin(moveDirection),
         )
-        self.position = newPosition
+
 
         # wywołaj move na mapie
 
