@@ -1,3 +1,5 @@
+import random
+from AntsSimulation.src.Food import Food
 import Pheromone
 import Ant
 import Position
@@ -49,6 +51,17 @@ class WorldMap:
             # select random location in a circle around "position" in range "recoil"
             # add food there
 
-    def getFoodInRadius(self, position: Position.Position, radius: float):
+    def removeFood(self, food: Food):
+        self.foods.pop(food)
+
+    def getFoodInRadius(self, midpoint: Position.Position, radius: float):
         # return single piece of food and delete it from self.foods
-        pass
+        foodInRadius = []
+        for food in self.foods:
+            if midpoint.distanceToObject(food.position) <= radius:
+                foodInRadius.append(food)
+
+        if len(foodInRadius) >= 1:
+            return random.choice(foodInRadius)
+        else:
+            return None

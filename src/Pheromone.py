@@ -14,7 +14,7 @@ class Pheromone:
         self.strength = startingStrength
 
 
-def getUnitedPheromoneAtCenterOfGravity(pheromones, type=PheromoneType.TRAIL):
+def getUnitedPheromoneAtCenterOfGravity(pheromones, trackedType):
     if len(pheromones) == 0:
         return
 
@@ -23,11 +23,11 @@ def getUnitedPheromoneAtCenterOfGravity(pheromones, type=PheromoneType.TRAIL):
     strength_sum = 0
 
     for pheromone in pheromones:
-        if pheromone.type == type:
+        if pheromone.type == trackedType:
             x_sum += pheromone.x * pheromone.strength
             y_sum += pheromone.y * pheromone.strength
             strength_sum += pheromone.strength
 
     return Pheromone(
-        type, Position(x_sum / strength_sum, y_sum / strength_sum), strength_sum
+        trackedType, Position(x_sum / strength_sum, y_sum / strength_sum), strength_sum
     )
