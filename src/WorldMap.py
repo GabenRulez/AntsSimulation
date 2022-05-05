@@ -38,10 +38,16 @@ class WorldMap:
         self.pheromones.append(pheromone)
 
     def updatePheromones(self):
+        pheromonesToDiscard = []
         for pheromone in self.pheromones:
+            pheromone.strength -= 1
+            if pheromone.strength <= 0:
+                pheromonesToDiscard.append(pheromone)
             # Walk over all pheromones and update their strength.
             # Later we can change their position.
-            pass
+
+        for pheromone in pheromonesToDiscard:
+            self.pheromones.remove(pheromone)
 
     def addAnt(self, ant: Ant.Ant):
         self.ants.append(ant)
@@ -49,7 +55,11 @@ class WorldMap:
 
     def updateAntPosition(self, ant: Ant.Ant, wantedPosition: Position.Position):
         # Limit the position by map borders.
-        pass
+        realisticPosition = Position.Position(
+            min(max(wantedPosition.x, -self.width / 2), self.width / 2),
+            min(max(wantedPosition.y, -self.height / 2), self.height / 2),
+        )
+        ant.pos = realisticPosition
 
     def spawnFoodClump(
         self, position: Position.Position, amount: int, recoil: float = 1.0
