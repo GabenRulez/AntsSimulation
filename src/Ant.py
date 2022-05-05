@@ -1,6 +1,6 @@
 import numpy as np
 import WorldMap
-from Pheromone import calculateAveragePheromonePosition
+from Pheromone import calculateAveragePheromonePosition, Pheromone
 import Position
 import math
 from PheromoneType import PheromoneType
@@ -110,6 +110,7 @@ class Ant:
             self.mark_return_trail()
 
     def mark_food_trail(self):
+        self.worldMap.addPheromones(Pheromone(PheromoneType.TRAIL, self.position))
         # Invoke when you have found food.
         # It will be used in order for other ants to find the food more optimally.
 
@@ -120,6 +121,7 @@ class Ant:
         pass
 
     def mark_return_trail(self):
+        self.worldMap.addPheromones(Pheromone(PheromoneType.HOME, self.position))
         # Invoke when you are looking for food.
         # It will be used in order to find optimal return path to the nest.
 
