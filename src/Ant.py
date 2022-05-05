@@ -76,6 +76,7 @@ class Ant:
              self.speed * math.cos(moveDirection),
              self.speed * math.sin(moveDirection),
         )
+        self.direction = moveDirection
 
 
         # wywołaj move na mapie
