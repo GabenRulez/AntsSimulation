@@ -1,13 +1,29 @@
+from WorldMap import WorldMap
+from Position import Position
+
 class Ant:
-    def __init__(self, x, y):
-        self.pos_x = x
-        self.pos_y = y
+    def __init__(self, position: Position):
+        self.pos = position
         self.sense_angle = 60
         self.walking_speed = 100
         # self.age = 0
         self.holding_food = False
+        self.worldMap = None
+
+    def update(self):
+        # Na podstawie czy self.holding_food = True - wybierz kierunek do domu lub kierunek do jedzenia
+        # Rusz się self.move(kierunek)
+        # Spróbuj podnieść jedzenie
+        # Na podstawie tego, czy TERAZ masz jedzenie, stwórz odpowiedniego feromona
+        #self.age +=1
+        pass
+
+    def setMap(self, worldMap:WorldMap):
+        self.worldMap = worldMap
 
     def decide(self):
+        # take self.holding_food = False into consideration
+
         # Detect pheromones in cone shape in front of the ant.
         # Take the angle from ant's `self.sense_angle`.
 
@@ -19,11 +35,11 @@ class Ant:
         # If you have food go towards the center of "return to base pheromones"
 
         # Return the angle of "desired movement"
+        # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
         pass
 
-    def move(self):
-        # Make a decision on the direction of your movement.
-        direction = self.decide()
+    def move(self, direction):
+        # wywołaj move na mapie
 
         # (Possible in the future) Check for obstacles on your path.
 
@@ -34,6 +50,9 @@ class Ant:
         # (Possible in the future) The "walking_speed" depends on the wind.
 
         # Spawn a "ReturnPheromone" or "FoodPheromone" depending on the current state of "holding_food".
+
+
+        # self.map.updateAntPosition(self, wantedPosition)
         pass
 
     def mark_food_trail(self):
@@ -43,6 +62,7 @@ class Ant:
         # Spawn a "FoodPheromone" object.
         # This object will have lifespan that will gradually go down until it disappears.
 
+        # self.map.addPheromone(typ ...
         pass
 
     def mark_return_trail(self):
@@ -51,4 +71,15 @@ class Ant:
 
         # Spawn a "ReturnPheromone" object.
         # This object will have lifespan that will gradually go down until it disappears.
+        # self.map.addPheromone(typ ...
         pass
+
+    def takeFood(self):
+        #foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
+        # if the foodToEat is not null - change your type to "carrying food= true"
+        # else do nothing
+        pass
+
+    def putDownFood(self):
+        self.holding_food = False
+

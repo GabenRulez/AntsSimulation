@@ -1,4 +1,5 @@
 import pygame
+from WorldMap import WorldMap
 
 WIDTH, HEIGHT = 1920, 1080
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -8,6 +9,7 @@ gameData = {
     "fps_limit": 60,
     "running": False,
     "clock": pygame.time.Clock(),
+    "worldMap": WorldMap(0, 0)
 }
 
 
@@ -23,6 +25,7 @@ def main():
 
 def setup():
     gameData["running"] = True
+    gameData["worldMap"] = WorldMap(200, 100)
 
 
 def loop():
@@ -31,7 +34,12 @@ def loop():
         if event.type == pygame.QUIT:
             gameData["running"] = False
 
+
+
     WIN.fill((63, 142, 252))
+
+
+
     pygame.display.update()
 
 
