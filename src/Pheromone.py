@@ -16,7 +16,7 @@ class Pheromone:
 
 def calculateAveragePheromonePosition(pheromones, trackedType):
     if len(pheromones) == 0:
-        return
+        return None
 
     x_sum = 0
     y_sum = 0
