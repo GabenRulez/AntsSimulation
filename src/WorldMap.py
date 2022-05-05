@@ -20,10 +20,17 @@ class WorldMap:
         range: float,
         rangeAngle: float,
     ):
+        queriedPheromones = []
+        for pheromone in self.pheromones:
+            if pheromone.position.distanceToObject(startingPoint) <= range:
+                angleBetweenPoints = startingPoint.angleToPoint(pheromone.position)
+                if angleBetweenPoints >= direction - rangeAngle/2 and angleBetweenPoints <= direction + rangeAngle/2:
+                    queriedPheromones.append(pheromone)
+
         # "direction" is a direction the ant is looking at.
         # We query points "range/2" to the left and to the right.
-        pass
-        # return [] - the list of pheromones
+        return queriedPheromones
+
 
     def addPheromones(self, pheromone: Pheromone.Pheromone):
         self.pheromones.append(pheromone)
