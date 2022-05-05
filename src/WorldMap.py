@@ -77,5 +77,4 @@ class WorldMap:
                 self.foods.pop(food)
                 return food
 
-  
         return None
