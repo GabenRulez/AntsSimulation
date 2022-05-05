@@ -65,10 +65,11 @@ class WorldMap:
         self, position: Position.Position, amount: int, recoil: float = 1.0
     ):
         for _ in range(amount):
-            pass
-            # self.foods.append(Food(random position))
-            # select random location in a circle around "position" in range "recoil"
-            # add food there
+             food_x = random.random(position.x - recoil, position.x + position)
+             food_y = random.random(position.y - recoil, position.y + position)
+
+             food_position = Position(food_x, food_y)
+             self.foods.append(Food(food_position))
 
     def getFoodInRadius(self, midpoint: Position.Position, radius: float):
         # return single piece of food and delete it from self.foods
