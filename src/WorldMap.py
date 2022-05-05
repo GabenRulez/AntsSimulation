@@ -1,5 +1,5 @@
 import random
-from AntsSimulation.src.Food import Food
+from Food import Food
 import Pheromone
 import Ant
 import Position
