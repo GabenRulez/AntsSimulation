@@ -1,6 +1,8 @@
 import numpy as np
 from AntsSimulation.src.Pheromone import getUnitedPheromoneAtCenterOfGravity
 from WorldMap import WorldMap
+import WorldMap
+from Pheromone import getUnitedPheromoneAtCenterOfGravity
 from Position import Position
 import math
 
@@ -14,7 +16,7 @@ class Ant:
         self.direction = 0
         # self.age = 0
         self.holding_food = False
-        self.worldMap  =  worldMap
+        self.worldMap = worldMap
 
     def update(self):
         # Na podstawie czy self.holding_food = True - wybierz kierunek do domu lub kierunek do jedzenia
@@ -34,7 +36,7 @@ class Ant:
         # Take the angle from ant's `self.sense_angle`.
         sensedPheromones = self.worldMap.getPheromonesInCircularSector()
         pheromoneCenter = getUnitedPheromoneAtCenterOfGravity(sensedPheromones)
-        
+    
         randomSwerve  = np.random.normal(0, RANDOMNESS_SIGMA, 1) * math.pi
         # Roll a dice and depending on the result:
         # Go right
@@ -45,7 +47,6 @@ class Ant:
 
         # Return the angle of "desired movement"
         # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
-
 
         pass
 

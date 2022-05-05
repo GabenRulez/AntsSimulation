@@ -1,5 +1,5 @@
 from Position import Position
-from WorldMap import WorldMap
+import WorldMap
 
 
 class Nest:
@@ -7,7 +7,7 @@ class Nest:
         self.position = position
         self.worldMap = None
 
-    def setMap(self, worldMap: WorldMap):
+    def setMap(self, worldMap: WorldMap.WorldMap):
         self.worldMap = worldMap
 
     def update(self):
