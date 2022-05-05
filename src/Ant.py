@@ -10,8 +10,8 @@ RANDOMNESS_SIGMA = 0.3
 
 class Ant:
     def __init__(self, position: Position, worldMap: WorldMap):
-        self.pos = position
         self.sense_angle = 60
+        self.position = position
         self.walking_speed = 100
         self.direction = 0
         self.radius = 1
@@ -72,11 +72,11 @@ class Ant:
 
     def move(self, direction):
 
-        oldPosition = self.popsition
         moveAngle = self.direction + self.decide()
         newPosition = Position(
             oldPosition.x + self.speed * math.cos(moveAngle),
             oldPosition.y + self.speed * math.sin(moveAngle),
+        oldPosition = self.position
         )
         self.position = newPosition
 

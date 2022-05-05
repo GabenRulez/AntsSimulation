@@ -59,7 +59,7 @@ class WorldMap:
             min(max(wantedPosition.x, -self.width / 2), self.width / 2),
             min(max(wantedPosition.y, -self.height / 2), self.height / 2),
         )
-        ant.pos = realisticPosition
+        ant.position = realisticPosition
 
     def spawnFoodClump(
         self, position: Position.Position, amount: int, recoil: float = 1.0
