@@ -1,6 +1,7 @@
 from Position import Position
 from PheromoneType import PheromoneType
 
+
 class Pheromone:
     def __init__(
         self,

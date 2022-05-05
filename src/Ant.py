@@ -25,15 +25,14 @@ class Ant:
         # Spróbuj podnieść jedzenie
         self.tryToTakeFood()
         # Na podstawie tego, czy TERAZ masz jedzenie, stwórz odpowiedniego feromona
-        if (self.holding_food):
+        if self.holding_food:
             self.mark_food_trail()
         else:
             self.mark_return_trail()
 
-        #self.age +=1
+        # self.age +=1
         pass
 
-        
     def setMap(self, worldMap: WorldMap):
         self.worldMap = worldMap
 
@@ -44,11 +43,12 @@ class Ant:
         else:
             pheromoneToTrack = PheromoneType.TRAIL
 
-
         # Detect pheromones in cone shape in front of the ant.
         # Take the angle from ant's `self.sense_angle`.
         sensedPheromones = self.worldMap.getPheromonesInCircularSector()
-        pheromoneCenter = getUnitedPheromoneAtCenterOfGravity(sensedPheromones, pheromoneToTrack)
+        pheromoneCenter = getUnitedPheromoneAtCenterOfGravity(
+            sensedPheromones, pheromoneToTrack
+        )
 
         randomSwerve = np.random.normal(0, RANDOMNESS_SIGMA, 1) * math.pi
         # Roll a dice and depending on the result:
@@ -105,13 +105,12 @@ class Ant:
     def tryToTakeFood(self):
         # foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
         # if the foodToEat is not null - change your type to "carrying food= true"
-        # else do nothing 
+        # else do nothing
         foodToEat = self.worldMap.getFoodInRadius(self.position, self.radius)
 
         if foodToEat:
             self.holding_food = True
             self.worldMap.removeFood(foodToEat)
-        
 
     def putDownFood(self):
         self.holding_food = False
