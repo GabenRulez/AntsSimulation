@@ -6,10 +6,8 @@ class Position:
         self.x = x
         self.y = y
 
-
     def distanceToObject(self, otherPosition):
         return math.dist([self.x, self.y], [otherPosition.x, otherPosition.y])
-
 
     def angleToPoint(self, otherPoint):
         tempAngle = math.atan((otherPoint.y - self.y) / (otherPoint.x - self.x))
