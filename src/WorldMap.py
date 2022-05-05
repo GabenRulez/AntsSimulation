@@ -2,6 +2,7 @@ import Pheromone
 import Ant
 import Position
 
+
 class WorldMap:
     def __init__(self, width, height):
         self.width = width
@@ -11,7 +12,11 @@ class WorldMap:
         self.foods = []
 
     def getPheromonesInCircularSector(
-        self, startingPoint: Position.Position, direction: float, range: float, rangeAngle: float
+        self,
+        startingPoint: Position.Position,
+        direction: float,
+        range: float,
+        rangeAngle: float,
     ):
         # "direction" is a direction the ant is looking at.
         # We query points "range/2" to the left and to the right.
@@ -35,7 +40,9 @@ class WorldMap:
         # Limit the position by map borders.
         pass
 
-    def spawnFoodClump(self, position: Position.Position, amount: int, recoil: float = 1.0):
+    def spawnFoodClump(
+        self, position: Position.Position, amount: int, recoil: float = 1.0
+    ):
         for _ in range(amount):
             pass
             # self.foods.append(Food(random position))
