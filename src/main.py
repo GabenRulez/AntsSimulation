@@ -16,8 +16,7 @@ gameData = {
     "worldMap": WorldMap.WorldMap(0, 0),
     "screenWidth": 1920,
     "screenHeight": 1080,
-    "window": None,
-    "antsNest": Nest.Nest(Position(100, 50)),
+    "window": None
 }
 
 
@@ -35,10 +34,13 @@ def setup():
     gameData["running"] = True
     worldMap = WorldMap.WorldMap(200, 200)
     gameData["worldMap"] = worldMap
+    gameData["antsNest"] = Nest.Nest(Position(100, 50), worldMap)
     worldMap.addAnt(Ant(Position(150, 50), worldMap))
     worldMap.addAnt(Ant(Position(50, 50), worldMap))
     worldMap.addAnt(Ant(Position(150, 150), worldMap))
     worldMap.addAnt(Ant(Position(50, 150), worldMap))
+
+    worldMap.spawnFoodClump(Position(50, 100), 2)
 
     gameData["window"] = pygame.display.set_mode(
         (gameData["screenWidth"], gameData["screenHeight"]), flags=pygame.RESIZABLE
@@ -51,6 +53,9 @@ def loop():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             gameData["running"] = False
+
+    updateAllAnts()
+    gameData["antsNest"].update()
 
     drawBackground()
     drawNest()
@@ -114,13 +119,17 @@ def drawAnts():
         pygame.draw.polygon(gameData["window"], ANT_COLOR, [p0, p1, p2])
 
     for ant in gameData["worldMap"].ants:
-        DrawArrow(ant.pos.x, ant.pos.y, ant.direction)
+        DrawArrow(ant.position.x, ant.position.y, ant.direction)
 
 
 def updateScreenInfo():
     screenInfo = pygame.display.Info()
     gameData["screenWidth"] = screenInfo.current_w
     gameData["screenHeight"] = screenInfo.current_h
+
+def updateAllAnts():
+    for ant in gameData["worldMap"].ants:
+        ant.update()
 
 
 if __name__ == "__main__":
