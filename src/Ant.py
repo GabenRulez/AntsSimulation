@@ -35,22 +35,21 @@ class Ant:
         else:
             self.mark_return_trail()
 
-        # self.age +=1
-        pass
 
     def setMap(self, worldMap: WorldMap):
         self.worldMap = worldMap
 
     def decide(self):
         # take self.holding_food = False into consideration
+        # Detect pheromones in circular sector shape in front of the ant.
+        detectedPheromones = self.worldMap.getPheromonesInCircularSector(self.position, self.direction, self.seeing_radius, self.seeing_angle)
+
+        # Calculate the "center of strength" (center of mass) of the pheromones. Filter by your state ("holding_food").
         if self.holding_food:
             pheromoneToTrack = PheromoneType.HOME
         else:
             pheromoneToTrack = PheromoneType.TRAIL
 
-        # Detect pheromones in cone shape in front of the ant.
-        # Take the angle from ant's `self.sense_angle`.
-        sensedPheromones = self.worldMap.getPheromonesInCircularSector()
         centerOfPheromones = calculateAveragePheromonePosition(
             detectedPheromones, pheromoneToTrack
         )
