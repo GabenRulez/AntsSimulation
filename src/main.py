@@ -1,5 +1,7 @@
 import pygame
 from WorldMap import WorldMap
+import WorldMap
+from Position import Position
 
 WIDTH, HEIGHT = 1920, 1080
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -9,7 +11,7 @@ gameData = {
     "fps_limit": 60,
     "running": False,
     "clock": pygame.time.Clock(),
-    "worldMap": WorldMap(0, 0),
+    "worldMap": WorldMap.WorldMap(0, 0),
 }
 
 
@@ -25,7 +27,7 @@ def main():
 
 def setup():
     gameData["running"] = True
-    gameData["worldMap"] = WorldMap(200, 100)
+    gameData["worldMap"] = WorldMap.WorldMap(200, 100)
 
 
 def loop():
