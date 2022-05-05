@@ -60,17 +60,12 @@ class WorldMap:
             # select random location in a circle around "position" in range "recoil"
             # add food there
 
-    def removeFood(self, food: Food):
-        self.foods.pop(food)
-
     def getFoodInRadius(self, midpoint: Position.Position, radius: float):
         # return single piece of food and delete it from self.foods
-        foodInRadius = []
         for food in self.foods:
             if midpoint.distanceToObject(food.position) <= radius:
-                foodInRadius.append(food)
+                self.foods.pop(food)
+                return food
 
-        if len(foodInRadius) >= 1:
-            return random.choice(foodInRadius)
-        else:
-            return None
+  
+        return None
