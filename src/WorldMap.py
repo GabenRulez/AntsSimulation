@@ -56,7 +56,8 @@ class WorldMap:
 
     def updateAntPosition(self, ant: Ant.Ant, wantedPosition: Position.Position):
         # Limit the position by map borders.
-        pass
+        realisticPosition = Position.Position(min(max(wantedPosition.x, -self.width/2), self.width/2), min(max(wantedPosition.y, -self.height/2), self.height/2))
+        ant.pos = realisticPosition
 
     def spawnFoodClump(
         self, position: Position.Position, amount: int, recoil: float = 1.0
