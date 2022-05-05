@@ -53,8 +53,9 @@ class WorldMap:
         self.ants.append(ant)
         # Update the structure
 
-    def updateAntPosition(self, ant: Ant.Ant, wantedPosition: Position.Position):
+    def limitAntPosition(self, ant: Ant.Ant):
         # Limit the position by map borders.
+        wantedPosition = ant.position
         realisticPosition = Position.Position(
             min(max(wantedPosition.x, -self.width / 2), self.width / 2),
             min(max(wantedPosition.y, -self.height / 2), self.height / 2),
