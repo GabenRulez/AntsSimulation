@@ -7,7 +7,6 @@ class Nest:
         self.position = position
         self.worldMap = worldMap
 
-
     def update(self):
         # for every ant in radius - take it from the Map class
         # execute ant.putDownFood()

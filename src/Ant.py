@@ -32,16 +32,18 @@ class Ant:
         self.mark_pheromones()
 
     def decide(self):
-        '''
+        """
         Calculate an angle with a bit of randomness. Moving in this direction should yield a big chance of encountering the requested type of `Pheromones`.
-        '''
+        """
 
         # Base your decision on whether you're holding food or not.
         # If you are, then you should try to find a way to the nest.
         # Otherwise, try to find a way to get closer to the food.
 
         # Detect pheromones in circular sector shape in front of the ant.
-        detectedPheromones = self.worldMap.getPheromonesInCircularSector(self.position, self.direction, self.seeing_radius, self.seeing_angle)
+        detectedPheromones = self.worldMap.getPheromonesInCircularSector(
+            self.position, self.direction, self.seeing_radius, self.seeing_angle
+        )
 
         # Calculate the "center of strength" (center of mass) of the pheromones. Filter by your state ("holding_food").
         if self.holding_food:
@@ -54,12 +56,20 @@ class Ant:
         )
 
         if centerOfPheromones is not None:
-            weightedNormalDistributionSigma = RANDOMNESS_SIGMA / centerOfPheromones.strength
-            return  np.random.normal(self.position.angleToPoint(centerOfPheromones.position), weightedNormalDistributionSigma, 1)           * math.pi
-
+            weightedNormalDistributionSigma = (
+                RANDOMNESS_SIGMA / centerOfPheromones.strength
+            )
+            return (
+                np.random.normal(
+                    self.position.angleToPoint(centerOfPheromones.position),
+                    weightedNormalDistributionSigma,
+                    1,
+                )
+                * math.pi
+            )
 
         else:
-            return self.direction + np.random.uniform(low=-np.pi/2, high=np.pi/2)
+            return self.direction + np.random.uniform(low=-np.pi / 2, high=np.pi / 2)
         # Roll a dice and depending on the result:
         # Go right
         # Go left
@@ -70,15 +80,13 @@ class Ant:
         # Return the angle of "desired movement"
         # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
 
-
     def move(self, moveDirection):
         self.position.add(
-             self.speed * math.cos(moveDirection),
-             self.speed * math.sin(moveDirection),
+            self.speed * math.cos(moveDirection),
+            self.speed * math.sin(moveDirection),
         )
         self.worldMap.limitAntPosition(self)
         self.direction = moveDirection
-
 
         # wywołaj move na mapie
 
@@ -92,7 +100,6 @@ class Ant:
 
         # Spawn a "ReturnPheromone" or "FoodPheromone" depending on the current state of "holding_food".
 
-
         # self.map.updateAntPosition(self, wantedPosition)
         pass
 
@@ -101,7 +108,6 @@ class Ant:
             self.mark_food_trail()
         else:
             self.mark_return_trail()
-
 
     def mark_food_trail(self):
         # Invoke when you have found food.

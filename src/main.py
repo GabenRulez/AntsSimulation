@@ -16,7 +16,7 @@ gameData = {
     "worldMap": WorldMap.WorldMap(0, 0),
     "screenWidth": 1920,
     "screenHeight": 1080,
-    "window": None
+    "window": None,
 }
 
 
@@ -126,6 +126,7 @@ def updateScreenInfo():
     screenInfo = pygame.display.Info()
     gameData["screenWidth"] = screenInfo.current_w
     gameData["screenHeight"] = screenInfo.current_h
+
 
 def updateAllAnts():
     for ant in gameData["worldMap"].ants:

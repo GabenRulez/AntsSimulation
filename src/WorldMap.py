@@ -5,6 +5,7 @@ import Ant
 import Position
 import numpy as np
 
+
 class WorldMap:
     def __init__(self, width, height):
         self.width = width
