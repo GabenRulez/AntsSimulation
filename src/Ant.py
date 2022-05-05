@@ -1,9 +1,11 @@
+import numpy as np
 from AntsSimulation.src.Pheromone import getUnitedPheromoneAtCenterOfGravity
 from WorldMap import WorldMap
 from Position import Position
 import math
 
-
+#sigma in normal distribution
+RANDOMNESS_SIGMA = 0.3
 class Ant:
     def __init__(self, position: Position, worldMap: WorldMap):
         self.pos = position
@@ -27,13 +29,13 @@ class Ant:
 
     def decide(self, pheromoneList):
         # take self.holding_food = False into consideration
+
         # Detect pheromones in cone shape in front of the ant.
         # Take the angle from ant's `self.sense_angle`.
         sensedPheromones = self.worldMap.getPheromonesInCircularSector()
         pheromoneCenter = getUnitedPheromoneAtCenterOfGravity(sensedPheromones)
-
-
-
+        
+        randomSwerve  = np.random.normal(0, RANDOMNESS_SIGMA, 1) * math.pi
         # Roll a dice and depending on the result:
         # Go right
         # Go left
@@ -59,6 +61,10 @@ class Ant:
         # (Possible in the future) The "walking_speed" depends on the wind.
 
         # Spawn a "ReturnPheromone" or "FoodPheromone" depending on the current state of "holding_food".
+        if (self.holding_food):
+            self.mark_food_trail()
+        else:
+            self.mark_return_trail()
 
         # self.map.updateAntPosition(self, wantedPosition)
         pass
