@@ -53,7 +53,10 @@ class Ant:
         pheromoneAngle = self.position.angleToPoint(pheromoneCenter.position)
         weightedNormalDistributionSigma = RANDOMNESS_SIGMA / pheromoneCenter.strength
 
-        randomizedAngle = np.random.normal(pheromoneAngle, weightedNormalDistributionSigma, 1) * math.pi
+        randomizedAngle = (
+            np.random.normal(pheromoneAngle, weightedNormalDistributionSigma, 1)
+            * math.pi
+        )
         # Roll a dice and depending on the result:
         # Go right
         # Go left
@@ -64,7 +67,7 @@ class Ant:
         # Return the angle of "desired movement"
         # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
 
-        return randomizedAngle 
+        return randomizedAngle
 
     def move(self, direction):
         # wywołaj move na mapie
