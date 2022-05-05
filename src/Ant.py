@@ -17,7 +17,6 @@ class Ant:
         self.direction = 0
         self.eating_radius = 0.5
         self.seeing_radius = 3
-        # self.age = 0
         self.speed = 1
         self.holding_food = False
         self.worldMap = worldMap
@@ -30,10 +29,7 @@ class Ant:
         # Na podstawie tego, czy TERAZ masz jedzenie, stwórz odpowiedniego feromona
         self.move(self.decide())
 
-        if self.holding_food:
-            self.mark_food_trail()
-        else:
-            self.mark_return_trail()
+        self.mark_pheromones()
 
     def decide(self):
         '''
@@ -96,13 +92,16 @@ class Ant:
         # (Possible in the future) The "walking_speed" depends on the wind.
 
         # Spawn a "ReturnPheromone" or "FoodPheromone" depending on the current state of "holding_food".
+
+
+        # self.map.updateAntPosition(self, wantedPosition)
+        pass
+
+    def mark_pheromones(self):
         if self.holding_food:
             self.mark_food_trail()
         else:
             self.mark_return_trail()
-
-        # self.map.updateAntPosition(self, wantedPosition)
-        pass
 
     def mark_food_trail(self):
         # Invoke when you have found food.
