@@ -11,11 +11,12 @@ RANDOMNESS_SIGMA = 0.3
 
 class Ant:
     def __init__(self, position: Position, worldMap: WorldMap):
-        self.sense_angle = 60
         self.position = position
+        self.seeing_angle = 60
         self.walking_speed = 100
         self.direction = 0
-        self.radius = 1
+        self.eating_radius = 0.5
+        self.seeing_radius = 3
         # self.age = 0
         self.speed = 1
         self.holding_food = False
