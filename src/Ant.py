@@ -1,15 +1,18 @@
+from AntsSimulation.src.Pheromone import getUnitedPheromoneAtCenterOfGravity
 from WorldMap import WorldMap
 from Position import Position
+import math
 
 
 class Ant:
-    def __init__(self, position: Position):
+    def __init__(self, position: Position, worldMap: WorldMap):
         self.pos = position
         self.sense_angle = 60
         self.walking_speed = 100
+        self.direction = 0
         # self.age = 0
         self.holding_food = False
-        self.worldMap = None
+        self.worldMap  =  worldMap
 
     def update(self):
         # Na podstawie czy self.holding_food = True - wybierz kierunek do domu lub kierunek do jedzenia
@@ -22,11 +25,14 @@ class Ant:
     def setMap(self, worldMap: WorldMap):
         self.worldMap = worldMap
 
-    def decide(self):
+    def decide(self, pheromoneList):
         # take self.holding_food = False into consideration
-
         # Detect pheromones in cone shape in front of the ant.
         # Take the angle from ant's `self.sense_angle`.
+        sensedPheromones = self.worldMap.getPheromonesInCircularSector()
+        pheromoneCenter = getUnitedPheromoneAtCenterOfGravity(sensedPheromones)
+
+
 
         # Roll a dice and depending on the result:
         # Go right
@@ -37,6 +43,8 @@ class Ant:
 
         # Return the angle of "desired movement"
         # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
+
+
         pass
 
     def move(self, direction):
