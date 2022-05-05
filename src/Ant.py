@@ -55,8 +55,8 @@ class Ant:
             detectedPheromones, pheromoneToTrack
         )
 
-        pheromoneAngle = self.position.angleToPoint(pheromoneCenter.position)
-        weightedNormalDistributionSigma = RANDOMNESS_SIGMA / pheromoneCenter.strength
+        pheromoneAngle = self.position.angleToPoint(centerOfPheromones.position)
+        weightedNormalDistributionSigma = RANDOMNESS_SIGMA / centerOfPheromones.strength
 
         randomizedAngle = (
             np.random.normal(pheromoneAngle, weightedNormalDistributionSigma, 1)
@@ -74,13 +74,12 @@ class Ant:
 
         return randomizedAngle
 
-    def move(self, direction):
+    def move(self, moveDirection):
 
-        moveAngle = self.direction + self.decide()
-        newPosition = Position(
-            oldPosition.x + self.speed * math.cos(moveAngle),
-            oldPosition.y + self.speed * math.sin(moveAngle),
         oldPosition = self.position
+        newPosition = Position.Position(
+            oldPosition.x + self.speed * math.cos(moveDirection),
+            oldPosition.y + self.speed * math.sin(moveDirection),
         )
         self.position = newPosition
 
@@ -126,7 +125,7 @@ class Ant:
         # foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
         # if the foodToEat is not null - change your type to "carrying food= true"
         # else do nothing
-        foodToEat = self.worldMap.getFoodInRadius(self.position, self.radius)
+        foodToEat = self.worldMap.getFoodInRadius(self.position, self.eating_radius)
 
         if foodToEat:
             self.holding_food = True
