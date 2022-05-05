@@ -3,7 +3,7 @@ from Food import Food
 import Pheromone
 import Ant
 import Position
-
+import numpy as np
 
 class WorldMap:
     def __init__(self, width, height):
@@ -65,10 +65,10 @@ class WorldMap:
         self, position: Position.Position, amount: int, recoil: float = 1.0
     ):
         for _ in range(amount):
-            food_x = random.random(position.x - recoil, position.x + position)
-            food_y = random.random(position.y - recoil, position.y + position)
+            food_x = position.x + np.random.uniform(low=-recoil, high=recoil)
+            food_y = position.y + np.random.uniform(low=-recoil, high=recoil)
 
-            food_position = Position(food_x, food_y)
+            food_position = Position.Position(food_x, food_y)
             self.foods.append(Food(food_position))
 
     def getFoodInRadius(self, midpoint: Position.Position, radius: float):
