@@ -3,6 +3,7 @@ import WorldMap
 from Pheromone import getUnitedPheromoneAtCenterOfGravity
 import Position
 import math
+from PheromoneType import PheromoneType
 
 # sigma in normal distribution
 RANDOMNESS_SIGMA = 0.3
