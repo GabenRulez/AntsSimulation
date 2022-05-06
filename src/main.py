@@ -56,10 +56,13 @@ def loop():
 
     updateAllAnts()
     gameData["antsNest"].update()
+    gameData["worldMap"].updatePheromones()
+
 
     drawBackground()
     drawNest()
     drawFood()
+    drawPheromones()
     drawAnts()
 
     pygame.display.update()
@@ -94,6 +97,15 @@ def drawFood():
             gameData["window"], FOOD_COLOR, (food.position.x, food.position.y), 1
         )
 
+def drawPheromones():
+    for pheromone in gameData["worldMap"].pheromones:
+        pheromoneStrength = min(pheromone.strength, 255)
+        pheromoneColor = (pheromoneStrength, pheromoneStrength, pheromoneStrength)
+        x = pheromone.position.x
+        y = pheromone.position.y
+        pygame.draw.circle(
+            gameData["window"], pheromoneColor, (x, y), 1
+        )
 
 def drawAnts():
     ANT_COLOR = (255, 255, 255)
