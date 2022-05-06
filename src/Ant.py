@@ -77,7 +77,7 @@ class Ant:
             )
 
         else:
-            return self.direction + np.random.uniform(low=-np.pi / 2, high=np.pi / 2)
+            return self.direction + np.random.uniform(low=-np.pi / 8, high=np.pi / 8)
         # Roll a dice and depending on the result:
         # Go right
         # Go left

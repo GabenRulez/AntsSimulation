@@ -4,6 +4,7 @@ import Nest
 from Position import Position
 from Ant import Ant
 import numpy as np
+from PheromoneType import PheromoneType
 
 WIDTH, HEIGHT = 1920, 1080
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -14,8 +15,8 @@ gameData = {
     "running": False,
     "clock": pygame.time.Clock(),
     "worldMap": WorldMap.WorldMap(0, 0),
-    "screenWidth": 1920,
-    "screenHeight": 1080,
+    "screenWidth": 1280,
+    "screenHeight": 720,
     "window": None,
 }
 
@@ -32,15 +33,15 @@ def main():
 
 def setup():
     gameData["running"] = True
-    worldMap = WorldMap.WorldMap(200, 200)
+    worldMap = WorldMap.WorldMap(gameData["screenWidth"], gameData["screenHeight"])
     gameData["worldMap"] = worldMap
-    gameData["antsNest"] = Nest.Nest(Position(100, 50), worldMap)
-    worldMap.addAnt(Ant(Position(150, 50), worldMap))
-    worldMap.addAnt(Ant(Position(50, 50), worldMap))
-    worldMap.addAnt(Ant(Position(150, 150), worldMap))
-    worldMap.addAnt(Ant(Position(50, 150), worldMap))
+    gameData["antsNest"] = Nest.Nest(Position(100, 100), 50, worldMap)
 
-    worldMap.spawnFoodClump(Position(50, 100), 2)
+    for _ in range(10):
+        antSpawnPosition = Position(np.random.uniform(low=0, high=gameData["screenWidth"]),  np.random.uniform(low=0, high=gameData["screenHeight"]))
+        worldMap.addAnt(Ant(antSpawnPosition, worldMap))
+
+    worldMap.spawnFoodClump(Position(700, 300), 100)
 
     gameData["window"] = pygame.display.set_mode(
         (gameData["screenWidth"], gameData["screenHeight"]), flags=pygame.RESIZABLE
@@ -85,7 +86,7 @@ def drawNest():
         gameData["window"],
         NEST_COLOR,
         (gameData["antsNest"].position.x, gameData["antsNest"].position.y),
-        10,
+        gameData["antsNest"].radius,
     )
 
 

@@ -67,7 +67,7 @@ class WorldMap:
         ant.position = realisticPosition
 
     def spawnFoodClump(
-        self, position: Position.Position, amount: int, recoil: float = 1.0
+        self, position: Position.Position, amount: int, recoil: float = 25.0
     ):
         for _ in range(amount):
             food_x = position.x + np.random.uniform(low=-recoil, high=recoil)
