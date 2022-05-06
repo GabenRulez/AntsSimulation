@@ -20,6 +20,7 @@ class Ant:
 
         self.eating_radius = 4
         self.holding_food = False
+        self.lifeCounter = 4
         self.worldMap = worldMap
 
 
@@ -34,7 +35,9 @@ class Ant:
         # Na podstawie tego, czy TERAZ masz jedzenie, stwórz odpowiedniego feromona
         self.move(self.decide())
 
-        self.mark_pheromones()
+        self.lifeCounter += 1
+        if self.lifeCounter%4 == 0:
+            self.mark_pheromones()
 
     def decide(self):
         """
