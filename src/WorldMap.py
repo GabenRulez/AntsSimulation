@@ -58,8 +58,8 @@ class WorldMap:
         # Limit the position by map borders.
         wantedPosition = ant.position
         realisticPosition = Position.Position(
-            min(max(wantedPosition.x, -self.width / 2), self.width / 2),
-            min(max(wantedPosition.y, -self.height / 2), self.height / 2),
+            min(max(wantedPosition.x, 0), self.width),
+            min(max(wantedPosition.y, 0), self.height),
         )
         ant.position = realisticPosition
 
