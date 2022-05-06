@@ -38,7 +38,10 @@ def setup():
     gameData["antsNest"] = Nest.Nest(Position(100, 100), 50, worldMap)
 
     for _ in range(10):
-        antSpawnPosition = Position(np.random.uniform(low=0, high=gameData["screenWidth"]),  np.random.uniform(low=0, high=gameData["screenHeight"]))
+        antSpawnPosition = Position(
+            np.random.uniform(low=0, high=gameData["screenWidth"]),
+            np.random.uniform(low=0, high=gameData["screenHeight"]),
+        )
         worldMap.addAnt(Ant(antSpawnPosition, worldMap))
 
     worldMap.spawnFoodClump(Position(700, 300), 100)
@@ -100,14 +103,22 @@ def drawFood():
 
 def drawPheromones():
     foodPheromonesColor = (63, 94, 49)
-    foodPheromonesColor = (255,255,0)
+    foodPheromonesColor = (255, 255, 0)
     trailPheromonesColor = (29, 26, 5)
     for pheromone in gameData["worldMap"].pheromones:
         pheromoneStrength = min(pheromone.strength, 255)
         if pheromone.type == PheromoneType.TRAIL:
-            pheromoneColor = (int(float(foodPheromonesColor[0])*pheromoneStrength/255), int(float(foodPheromonesColor[1])*pheromoneStrength/255), int(float(foodPheromonesColor[2])*pheromoneStrength/255))
+            pheromoneColor = (
+                int(float(foodPheromonesColor[0]) * pheromoneStrength / 255),
+                int(float(foodPheromonesColor[1]) * pheromoneStrength / 255),
+                int(float(foodPheromonesColor[2]) * pheromoneStrength / 255),
+            )
         else:
-            pheromoneColor = (int(float(trailPheromonesColor[0])*pheromoneStrength/255), int(float(trailPheromonesColor[1])*pheromoneStrength/255), int(float(trailPheromonesColor[2])*pheromoneStrength/255))
+            pheromoneColor = (
+                int(float(trailPheromonesColor[0]) * pheromoneStrength / 255),
+                int(float(trailPheromonesColor[1]) * pheromoneStrength / 255),
+                int(float(trailPheromonesColor[2]) * pheromoneStrength / 255),
+            )
         x = pheromone.position.x
         y = pheromone.position.y
         pygame.draw.circle(gameData["window"], pheromoneColor, (x, y), 3)
@@ -116,7 +127,9 @@ def drawPheromones():
 def drawAnts():
     antColor = (0, 0, 0)
     for ant in gameData["worldMap"].ants:
-        pygame.draw.circle(gameData["window"], antColor, (ant.position.x, ant.position.y), 3)
+        pygame.draw.circle(
+            gameData["window"], antColor, (ant.position.x, ant.position.y), 3
+        )
 
 
 def updateScreenInfo():

@@ -14,7 +14,12 @@ class Pheromone:
         self.strength = startingStrength
 
     def __str__(self):
-        return "<Pheromone '{0}': strength={1}, position={2}>".format("Home" if self.type==PheromoneType.HOME else "Trail", self.strength, self.position.__str__())
+        return "<Pheromone '{0}': strength={1}, position={2}>".format(
+            "Home" if self.type == PheromoneType.HOME else "Trail",
+            self.strength,
+            self.position.__str__(),
+        )
+
 
 def calculateAveragePheromonePosition(pheromones, trackedType):
     # TODO It's not working "great", ants often get stuck looped into each other. Create another way of "deciding".
@@ -34,6 +39,6 @@ def calculateAveragePheromonePosition(pheromones, trackedType):
     else:
         return Pheromone(
             trackedType,
-            Position(x_sum / strength_sum, y_sum /strength_sum),
+            Position(x_sum / strength_sum, y_sum / strength_sum),
             strength_sum,
         )

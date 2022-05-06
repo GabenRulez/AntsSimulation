@@ -15,7 +15,13 @@ class WorldMap:
         self.foods = []
 
     def __str__(self):
-        return "<WorldMap: width={0}, height={1}, pheromonesAmount={2}, antsAmount={3}, foodsAmount={4}>".format(self.width, self.height, len(self.pheromones), len(self.ants), len(self.foods))
+        return "<WorldMap: width={0}, height={1}, pheromonesAmount={2}, antsAmount={3}, foodsAmount={4}>".format(
+            self.width,
+            self.height,
+            len(self.pheromones),
+            len(self.ants),
+            len(self.foods),
+        )
 
     def getPheromonesInCircularSector(
         self,

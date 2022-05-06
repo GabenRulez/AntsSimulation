@@ -23,9 +23,17 @@ class Ant:
         self.lifeCounter = 4
         self.worldMap = worldMap
 
-
     def __str__(self):
-        return "<Ant: walkingSpeed={0}, direction={1}, seeingRadius={2}, seeingAngle={3}, eatingRadius={4}, holdingFood={5}, lifeCounter={6}, position={7}>".format(self.walkingSpeed, self.direction, self.seeing_radius, self.seeing_angle, self.eating_radius, self.holding_food, self.lifeCounter, self.position.__str__())
+        return "<Ant: walkingSpeed={0}, direction={1}, seeingRadius={2}, seeingAngle={3}, eatingRadius={4}, holdingFood={5}, lifeCounter={6}, position={7}>".format(
+            self.walkingSpeed,
+            self.direction,
+            self.seeing_radius,
+            self.seeing_angle,
+            self.eating_radius,
+            self.holding_food,
+            self.lifeCounter,
+            self.position.__str__(),
+        )
 
     def update(self):
         # Na podstawie czy self.holding_food = True - wybierz kierunek do domu lub kierunek do jedzenia
@@ -36,7 +44,7 @@ class Ant:
         self.move(self.decide())
 
         self.lifeCounter += 1
-        if self.lifeCounter%4 == 0:
+        if self.lifeCounter % 4 == 0:
             self.mark_pheromones()
 
     def decide(self):
