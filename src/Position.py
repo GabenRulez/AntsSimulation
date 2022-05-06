@@ -25,6 +25,6 @@ class Position:
                     return tempAngle
         except ZeroDivisionError:
             if otherPoint.y > self.y:
-                return math.pi /2
+                return math.pi / 2
             else:
                 return 3 * math.pi / 2

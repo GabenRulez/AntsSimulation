@@ -30,5 +30,7 @@ def calculateAveragePheromonePosition(pheromones, trackedType):
 
     else:
         return Pheromone(
-            trackedType, Position(x_sum / strength_sum, y_sum / strength_sum), strength_sum
+            trackedType,
+            Position(x_sum / strength_sum, y_sum / strength_sum),
+            strength_sum,
         )
