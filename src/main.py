@@ -91,7 +91,7 @@ def drawNest():
 
 
 def drawFood():
-    FOOD_COLOR = (0, 255, 0)
+    FOOD_COLOR = (127, 176, 105)
     for food in gameData["worldMap"].foods:
         pygame.draw.circle(
             gameData["window"], FOOD_COLOR, (food.position.x, food.position.y), 1
@@ -99,39 +99,24 @@ def drawFood():
 
 
 def drawPheromones():
+    foodPheromonesColor = (63, 94, 49)
+    foodPheromonesColor = (255,255,0)
+    trailPheromonesColor = (29, 26, 5)
     for pheromone in gameData["worldMap"].pheromones:
         pheromoneStrength = min(pheromone.strength, 255)
-        pheromoneColor = (pheromoneStrength, pheromoneStrength, pheromoneStrength)
+        if pheromone.type == PheromoneType.TRAIL:
+            pheromoneColor = (int(float(foodPheromonesColor[0])*pheromoneStrength/255), int(float(foodPheromonesColor[1])*pheromoneStrength/255), int(float(foodPheromonesColor[2])*pheromoneStrength/255))
+        else:
+            pheromoneColor = (int(float(trailPheromonesColor[0])*pheromoneStrength/255), int(float(trailPheromonesColor[1])*pheromoneStrength/255), int(float(trailPheromonesColor[2])*pheromoneStrength/255))
         x = pheromone.position.x
         y = pheromone.position.y
-        pygame.draw.circle(gameData["window"], pheromoneColor, (x, y), 1)
+        pygame.draw.circle(gameData["window"], pheromoneColor, (x, y), 3)
 
 
 def drawAnts():
-    ANT_COLOR = (255, 255, 255)
-
-    def DrawArrow(x, y, angle=0):
-        def rotate(pos, angle):
-            cen = (5 + x, 0 + y)
-            angle *= -(np.pi / 180)
-            cos_theta = np.cos(angle)
-            sin_theta = np.sin(angle)
-            ret = (
-                (cos_theta * (pos[0] - cen[0]) - sin_theta * (pos[1] - cen[1]))
-                + cen[0],
-                (sin_theta * (pos[0] - cen[0]) + cos_theta * (pos[1] - cen[1]))
-                + cen[1],
-            )
-            return ret
-
-        p0 = rotate((0 + x, -4 + y), angle + 90)
-        p1 = rotate((0 + x, 4 + y), angle + 90)
-        p2 = rotate((10 + x, 0 + y), angle + 90)
-
-        pygame.draw.polygon(gameData["window"], ANT_COLOR, [p0, p1, p2])
-
+    antColor = (0, 0, 0)
     for ant in gameData["worldMap"].ants:
-        DrawArrow(ant.position.x, ant.position.y, ant.direction)
+        pygame.draw.circle(gameData["window"], antColor, (ant.position.x, ant.position.y), 3)
 
 
 def updateScreenInfo():
