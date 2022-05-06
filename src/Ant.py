@@ -12,12 +12,13 @@ RANDOMNESS_SIGMA = 0.3
 class Ant:
     def __init__(self, position: Position, worldMap: WorldMap):
         self.position = position
+        self.direction = np.random.uniform(low=-np.pi, high=np.pi)
+        self.walkingSpeed = 5
+
+        self.seeing_radius = 80
         self.seeing_angle = 60
-        self.walking_speed = 100
-        self.direction = 0
-        self.eating_radius = 0.5
-        self.seeing_radius = 3
-        self.speed = 1
+
+        self.eating_radius = 4
         self.holding_food = False
         self.worldMap = worldMap
 
@@ -86,8 +87,8 @@ class Ant:
 
     def move(self, moveDirection):
         self.position.add(
-            self.speed * math.cos(moveDirection),
-            self.speed * math.sin(moveDirection),
+            self.walkingSpeed * math.cos(moveDirection),
+            self.walkingSpeed * math.sin(moveDirection),
         )
         self.worldMap.limitAntPosition(self)
         self.direction = moveDirection
