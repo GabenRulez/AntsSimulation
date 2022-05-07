@@ -36,4 +36,4 @@ class Position:
         diff_x = distance * math.cos(angle)
         diff_y = distance * math.sin(angle)
 
-        return Position(self.x + (distance*diff_x), self.y + (distance*diff_y))
+        return Position(self.x + (distance * diff_x), self.y + (distance * diff_y))
