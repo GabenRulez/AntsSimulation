@@ -1,14 +1,33 @@
-import pygame
+import random
+import pygame, emoji
 import WorldMap
 import Nest
 from Position import Position
 from Ant import Ant
 import numpy as np
 from PheromoneType import PheromoneType
+from enum import Enum
+import pygame.freetype  # Import the freetype module.
+
+
+mapColors = {"map":(102, 255, 179), 
+"nest_a": (0, 128, 64),
+"nest_b": (40, 168, 104),
+"food": (127, 176, 105),
+"ant": (0,0,0),
+"trail_pheromone": (255, 153, 0),
+"food_pheromone": (0, 0, 255)
+}
 
 WIDTH, HEIGHT = 1920, 1080
+pygame.init()
+
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Ants Simulation")
+# GAME_FONT = pygame.freetype.Font(24)
+pygame.font.init() # you have to call this at the start, 
+                   # if you want to use this module.
+GAME_FONT = pygame.font.SysFont("arialunicode", 30)
 
 gameData = {
     "fps_limit": 60,
@@ -73,64 +92,90 @@ def loop():
 
 def drawBackground():
     BACKGROUND_COLOR = (0, 0, 0)
-    MAP_COLOR = (207, 136, 70)
 
     WIN.fill(BACKGROUND_COLOR)
     pygame.draw.rect(
         gameData["window"],
-        MAP_COLOR,
+        mapColors["map"],
         (0, 0, gameData["worldMap"].width, gameData["worldMap"].height),
     )
 
 
 def drawNest():
-    NEST_COLOR = (255, 0, 0)
-    pygame.draw.circle(
-        gameData["window"],
-        NEST_COLOR,
-        (gameData["antsNest"].position.x, gameData["antsNest"].position.y),
-        gameData["antsNest"].radius,
-    )
+    ringWidth = 5
+    for i in range ( gameData["antsNest"].radius//ringWidth):
+        if i%2 == 0:
+            color = mapColors["nest_a"]
+        else :
+
+            color = mapColors["nest_b"]
+
+        pygame.draw.circle(
+            gameData["window"],
+           color,
+            (gameData["antsNest"].position.x, gameData["antsNest"].position.y),
+            gameData["antsNest"].radius - i*ringWidth,
+        )
 
 
 def drawFood():
-    FOOD_COLOR = (127, 176, 105)
     for food in gameData["worldMap"].foods:
-        pygame.draw.circle(
-            gameData["window"], FOOD_COLOR, (food.position.x, food.position.y), 1
-        )
 
+        # img1 = GAME_FONT.render("★", True, (r,g,b))
+        # WIN.blit(img1, (food.position.x, food.position.y))
+
+        pygame.draw.circle(
+            gameData["window"], mapColors['food'], (food.position.x, food.position.y), 2
+        )
 
 def drawPheromones():
     foodPheromonesColor = (63, 94, 49)
     foodPheromonesColor = (255, 255, 0)
     trailPheromonesColor = (29, 26, 5)
+
     for pheromone in gameData["worldMap"].pheromones:
         pheromoneStrength = min(pheromone.strength, 255)
+        maxPheromoneStrength = 255
+
         if pheromone.type == PheromoneType.TRAIL:
-            pheromoneColor = (
-                int(float(foodPheromonesColor[0]) * pheromoneStrength / 255),
-                int(float(foodPheromonesColor[1]) * pheromoneStrength / 255),
-                int(float(foodPheromonesColor[2]) * pheromoneStrength / 255),
-            )
+            initialPheromoneColor = mapColors["trail_pheromone"]
+            
         else:
-            pheromoneColor = (
-                int(float(trailPheromonesColor[0]) * pheromoneStrength / 255),
-                int(float(trailPheromonesColor[1]) * pheromoneStrength / 255),
-                int(float(trailPheromonesColor[2]) * pheromoneStrength / 255),
+            initialPheromoneColor = mapColors["food_pheromone"]
+
+        r,g,b = initialPheromoneColor[0],initialPheromoneColor[1],initialPheromoneColor[2]
+        r_0, g_0, b_0 = mapColors["map"][0], mapColors["map"][1], mapColors["map"][2]
+        
+        pheromoneColor = (
+            int(float((r * pheromoneStrength + r_0 * (maxPheromoneStrength - pheromoneStrength))/maxPheromoneStrength)),
+            int(float((g * pheromoneStrength + g_0 * (maxPheromoneStrength - pheromoneStrength))/maxPheromoneStrength)),
+            int(float((b * pheromoneStrength + b_0 * (maxPheromoneStrength - pheromoneStrength))/maxPheromoneStrength)),
             )
+
         x = pheromone.position.x
         y = pheromone.position.y
+
         pygame.draw.circle(gameData["window"], pheromoneColor, (x, y), 3)
 
 
 def drawAnts():
-    antColor = (0, 0, 0)
+    antRad = 5
+
     for ant in gameData["worldMap"].ants:
+        antPosition = ant.position
         pygame.draw.circle(
-            gameData["window"], antColor, (ant.position.x, ant.position.y), 3
+            gameData["window"], mapColors["ant"], (antPosition.x, antPosition.y), antRad
         )
 
+        headPosition = antPosition.pointAtAngle(ant.direction, antRad*(2/3))
+        pygame.draw.circle(
+            gameData["window"], mapColors["ant"], (headPosition.x,headPosition.y), antRad
+        )
+
+        backPosition = antPosition.pointAtAngle(ant.direction, -antRad*(2/3))
+        pygame.draw.circle(
+            gameData["window"], mapColors["ant"], (backPosition.x,backPosition.y), antRad
+        )
 
 def updateScreenInfo():
     screenInfo = pygame.display.Info()
