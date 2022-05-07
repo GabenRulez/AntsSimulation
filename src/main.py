@@ -24,7 +24,7 @@ pygame.init()
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Ants Simulation")
 
-#SIDE MENU
+# SIDE MENU
 pygame.font.init()
 GAME_FONT_LARGE = pygame.font.SysFont("arialunicode", 60)
 GAME_FONT = pygame.font.SysFont("arialunicode", 30)
@@ -41,15 +41,14 @@ gameData = {
     "window": None,
 }
 
+
 def main():
     gameData["clock"] = pygame.time.Clock()
 
     setup()
 
-
     while gameData["running"]:
         loop()
-
 
     pygame.quit()
 
@@ -70,9 +69,11 @@ def setup():
     worldMap.spawnFoodClump(Position(700, 300), 100)
 
     gameData["window"] = pygame.display.set_mode(
-        (gameData["mapWidth"]+gameData["sideMenuWidth"], gameData["mapHeight"]), flags=pygame.RESIZABLE
+        (gameData["mapWidth"] + gameData["sideMenuWidth"], gameData["mapHeight"]),
+        flags=pygame.RESIZABLE,
     )
     updateScreenInfo()
+
 
 def loop():
     gameData["clock"].tick(gameData["fps_limit"])
@@ -101,20 +102,23 @@ def drawSideMenu(events):
     pygame.draw.rect(
         gameData["window"],
         mapColors["menu"],
-        (x_start, y_start, x_start+gameData["sideMenuWidth"],y_start+ gameData["worldMap"].height)
+        (
+            x_start,
+            y_start,
+            x_start + gameData["sideMenuWidth"],
+            y_start + gameData["worldMap"].height,
+        ),
     )
 
-    MenuLabel = GAME_FONT_LARGE.render('MENU', True, (0,255,0))
-    WIN.blit(MenuLabel, (x_start+10, 10))
+    MenuLabel = GAME_FONT_LARGE.render("MENU", True, (0, 255, 0))
+    WIN.blit(MenuLabel, (x_start + 10, 10))
 
-    amountOfAntsLabel = GAME_FONT.render('Number of ants:', True, (0,255,0))
-    WIN.blit(amountOfAntsLabel, (x_start+10, 140))
+    amountOfAntsLabel = GAME_FONT.render("Number of ants:", True, (0, 255, 0))
+    WIN.blit(amountOfAntsLabel, (x_start + 10, 140))
 
     amountOfAntsInput.update(events)
     WIN.blit(amountOfAntsInput.surface, (x_start + 10, 200))
 
-    
-    
 
 def drawBackground():
     BACKGROUND_COLOR = (0, 0, 0)
