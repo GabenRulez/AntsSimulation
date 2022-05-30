@@ -73,11 +73,11 @@ class WorldMap:
         ant.position = realisticPosition
 
     def leapAntPosition(self, ant: Ant.Ant):
-        '''If an Ant went over the border, teleport it to the other side of the map.'''
+        """If an Ant went over the border, teleport it to the other side of the map."""
         wantedPosition = ant.position
         realisticPosition = Position.Position(
-            wantedPosition.x%self.width,
-            wantedPosition.y%self.height,
+            wantedPosition.x % self.width,
+            wantedPosition.y % self.height,
         )
         ant.position = realisticPosition
 

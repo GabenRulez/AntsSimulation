@@ -49,6 +49,8 @@ def calculatePheromonesStrength(startingPosition, pheromones, trackedType):
 
     for pheromone in pheromones:
         if pheromone.type == trackedType:
-            strength_sum += pheromone.strength# / max(                1.0, pheromone.position.distanceToObject(startingPosition))
+            strength_sum += (
+                pheromone.strength
+            )  # / max(                1.0, pheromone.position.distanceToObject(startingPosition))
 
     return strength_sum
