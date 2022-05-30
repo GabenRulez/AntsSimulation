@@ -1,5 +1,6 @@
 import pygame
-import pygame_textinput
+
+# import pygame_textinput
 import WorldMap
 import Nest
 from Position import Position
@@ -28,17 +29,18 @@ pygame.display.set_caption("Ants Simulation")
 pygame.font.init()
 GAME_FONT_LARGE = pygame.font.SysFont("arialunicode", 60)
 GAME_FONT = pygame.font.SysFont("arialunicode", 30)
-amountOfAntsInput = pygame_textinput.TextInputVisualizer()
+# amountOfAntsInput = pygame_textinput.TextInputVisualizer()
 
 gameData = {
     "fps_limit": 60,
     "running": False,
     "clock": pygame.time.Clock(),
     "worldMap": WorldMap.WorldMap(0, 0),
-    "mapWidth": 876,
-    "sideMenuWidth": 256,
-    "mapHeight": 720,
+    "mapWidth": 1920,  # 876,
+    "sideMenuWidth": 0,  # 256,
+    "mapHeight": 1080,  # 720,
     "window": None,
+    "startingAntsAmount": 100,
 }
 
 
@@ -57,16 +59,19 @@ def setup():
     gameData["running"] = True
     worldMap = WorldMap.WorldMap(gameData["mapWidth"], gameData["mapHeight"])
     gameData["worldMap"] = worldMap
-    gameData["antsNest"] = Nest.Nest(Position(100, 100), 50, worldMap)
 
-    for _ in range(10):
-        antSpawnPosition = Position(
-            np.random.uniform(low=0, high=gameData["mapWidth"]),
-            np.random.uniform(low=0, high=gameData["mapHeight"]),
-        )
-        worldMap.addAnt(Ant(antSpawnPosition, worldMap))
+    nestPosition = Position(
+        gameData["mapWidth"] / 10 * 3, gameData["mapHeight"] / 10 * 3
+    )
+    gameData["antsNest"] = Nest.Nest(nestPosition, 50, worldMap)
 
-    worldMap.spawnFoodClump(Position(700, 300), 100)
+    for _ in range(gameData["startingAntsAmount"]):
+        worldMap.addAnt(Ant(nestPosition, worldMap))
+
+    worldMap.spawnFoodClump(
+        Position(gameData["mapWidth"] / 10 * 7, gameData["mapHeight"] / 10 * 7),
+        gameData["startingAntsAmount"] * 5,
+    )
 
     gameData["window"] = pygame.display.set_mode(
         (gameData["mapWidth"] + gameData["sideMenuWidth"], gameData["mapHeight"]),
@@ -91,7 +96,7 @@ def loop():
     drawFood()
     drawPheromones()
     drawAnts()
-    drawSideMenu(events)
+    # drawSideMenu(events)
 
     pygame.display.update()
 
@@ -116,8 +121,8 @@ def drawSideMenu(events):
     amountOfAntsLabel = GAME_FONT.render("Number of ants:", True, (0, 255, 0))
     WIN.blit(amountOfAntsLabel, (x_start + 10, 140))
 
-    amountOfAntsInput.update(events)
-    WIN.blit(amountOfAntsInput.surface, (x_start + 10, 200))
+    # amountOfAntsInput.update(events)
+    # WIN.blit(amountOfAntsInput.surface, (x_start + 10, 200))
 
 
 def drawBackground():
