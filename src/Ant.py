@@ -19,10 +19,10 @@ class Ant:
         self.direction = np.random.uniform(low=-np.pi, high=np.pi)
         self.walkingSpeed = 10
 
-        self.seeing_radius = 80
-        self.seeing_angle = 60
+        self.seeing_radius = 100
+        self.seeing_angle = 150
 
-        self.eating_radius = 4
+        self.eating_radius = 10
         self.holding_food = False
         self.lifeCounter = 4
         self.worldMap = worldMap
@@ -60,6 +60,17 @@ class Ant:
         # If you are, then you should try to find a way to the nest.
         # Otherwise, try to find a way to get closer to the food.
 
+        if self.holding_food:
+            pheromoneToTrack = PheromoneType.HOME
+        else:
+            # If you can detect food, then this is the direction you should go. If you can't, then you should follow the pheromones.
+            detectedFood = self.worldMap.getFoodInRadius(self.position, self.seeing_radius)
+            if detectedFood is not None:
+                return self.position.angleToPoint(detectedFood.position)
+            pheromoneToTrack = PheromoneType.TRAIL
+
+
+
         # Search in 3 circular sector shapes: on the left, in front of and on the right.
         # Choose direction which has the most pheromones.
         detectedLeftPheromones = self.worldMap.getPheromonesInCircularSector(
@@ -79,11 +90,6 @@ class Ant:
         )
 
         # Calculate the "center of strength" (center of mass) of the pheromones. Filter by your state ("holding_food").
-        if self.holding_food:
-            pheromoneToTrack = PheromoneType.HOME
-        else:
-            pheromoneToTrack = PheromoneType.TRAIL
-
         leftPheromonesStrength = calculatePheromonesStrength(
             startingPosition=self.position,
             pheromones=detectedLeftPheromones,
