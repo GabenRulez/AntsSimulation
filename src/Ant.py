@@ -64,12 +64,12 @@ class Ant:
             pheromoneToTrack = PheromoneType.HOME
         else:
             # If you can detect food, then this is the direction you should go. If you can't, then you should follow the pheromones.
-            detectedFood = self.worldMap.getFoodInRadius(self.position, self.seeing_radius)
+            detectedFood = self.worldMap.getFoodInRadius(
+                self.position, self.seeing_radius
+            )
             if detectedFood is not None:
                 return self.position.angleToPoint(detectedFood.position)
             pheromoneToTrack = PheromoneType.TRAIL
-
-
 
         # Search in 3 circular sector shapes: on the left, in front of and on the right.
         # Choose direction which has the most pheromones.
