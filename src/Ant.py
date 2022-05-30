@@ -1,6 +1,10 @@
 import numpy as np
 import WorldMap
-from Pheromone import calculateAveragePheromonePosition, Pheromone
+from Pheromone import (
+    calculateAveragePheromonePosition,
+    Pheromone,
+    calculatePheromonesStrength,
+)
 import Position
 import math
 from PheromoneType import PheromoneType
@@ -13,7 +17,7 @@ class Ant:
     def __init__(self, position: Position, worldMap: WorldMap):
         self.position = position
         self.direction = np.random.uniform(low=-np.pi, high=np.pi)
-        self.walkingSpeed = 5
+        self.walkingSpeed = 10
 
         self.seeing_radius = 80
         self.seeing_angle = 60
@@ -56,9 +60,22 @@ class Ant:
         # If you are, then you should try to find a way to the nest.
         # Otherwise, try to find a way to get closer to the food.
 
-        # Detect pheromones in circular sector shape in front of the ant.
-        detectedPheromones = self.worldMap.getPheromonesInCircularSector(
-            self.position, self.direction, self.seeing_radius, self.seeing_angle
+        # Search in 3 circular sector shapes: on the left, in front of and on the right.
+        # Choose direction which has the most pheromones.
+        detectedLeftPheromones = self.worldMap.getPheromonesInCircularSector(
+            self.position,
+            self.direction - self.seeing_angle / 3,
+            self.seeing_radius,
+            self.seeing_angle / 3,
+        )
+        detectedFrontPheromones = self.worldMap.getPheromonesInCircularSector(
+            self.position, self.direction, self.seeing_radius, self.seeing_angle / 3
+        )
+        detectedRightPheromones = self.worldMap.getPheromonesInCircularSector(
+            self.position,
+            self.direction + self.seeing_angle / 3,
+            self.seeing_radius,
+            self.seeing_angle / 3,
         )
 
         # Calculate the "center of strength" (center of mass) of the pheromones. Filter by your state ("holding_food").
@@ -67,25 +84,61 @@ class Ant:
         else:
             pheromoneToTrack = PheromoneType.TRAIL
 
-        centerOfPheromones = calculateAveragePheromonePosition(
-            detectedPheromones, pheromoneToTrack
+        leftPheromonesStrength = calculatePheromonesStrength(
+            startingPosition=self.position,
+            pheromones=detectedLeftPheromones,
+            trackedType=pheromoneToTrack,
+        )
+        frontPheromonesStrength = calculatePheromonesStrength(
+            startingPosition=self.position,
+            pheromones=detectedFrontPheromones,
+            trackedType=pheromoneToTrack,
+        )
+        rightPheromonesStrength = calculatePheromonesStrength(
+            startingPosition=self.position,
+            pheromones=detectedRightPheromones,
+            trackedType=pheromoneToTrack,
         )
 
-        if centerOfPheromones is not None:
-            weightedNormalDistributionSigma = (
-                RANDOMNESS_SIGMA / centerOfPheromones.strength
-            )
-            return (
-                np.random.normal(
-                    self.position.angleToPoint(centerOfPheromones.position),
-                    weightedNormalDistributionSigma,
-                    1,
-                )
-                * math.pi
-            )
+        if (
+            frontPheromonesStrength > leftPheromonesStrength
+            and frontPheromonesStrength > rightPheromonesStrength
+        ):
+            return self.direction + np.random.uniform(low=-np.pi / 16, high=np.pi / 16)
 
+        elif leftPheromonesStrength > rightPheromonesStrength:
+            return (
+                self.direction
+                - self.seeing_angle / 3
+                + np.random.uniform(low=-np.pi / 16, high=np.pi / 16)
+            )
+        elif rightPheromonesStrength > leftPheromonesStrength:
+            return (
+                self.direction
+                + self.seeing_angle / 3
+                + np.random.uniform(low=-np.pi / 16, high=np.pi / 16)
+            )
         else:
             return self.direction + np.random.uniform(low=-np.pi / 8, high=np.pi / 8)
+        # centerOfPheromones = calculateAveragePheromonePosition(
+        #    detectedPheromones, pheromoneToTrack
+        # )
+
+        # if centerOfPheromones is not None:
+        #    weightedNormalDistributionSigma = (
+        #        RANDOMNESS_SIGMA / centerOfPheromones.strength
+        #    )
+        #    return (
+        #        np.random.normal(
+        #            self.position.angleToPoint(centerOfPheromones.position),
+        #            weightedNormalDistributionSigma,
+        #            1,
+        #        )
+        #        * math.pi
+        #    )
+
+        # else:
+        #    return self.direction + np.random.uniform(low=-np.pi / 8, high=np.pi / 8)
         # Roll a dice and depending on the result:
         # Go right
         # Go left
@@ -102,6 +155,7 @@ class Ant:
             self.walkingSpeed * math.sin(moveDirection),
         )
         self.worldMap.limitAntPosition(self)
+        # self.worldMap.leapAntPosition(self)
         self.direction = moveDirection
 
         # wywołaj move na mapie
