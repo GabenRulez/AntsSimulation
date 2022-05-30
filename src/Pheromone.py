@@ -42,3 +42,13 @@ def calculateAveragePheromonePosition(pheromones, trackedType):
             Position(x_sum / strength_sum, y_sum / strength_sum),
             strength_sum,
         )
+
+
+def calculatePheromonesStrength(startingPosition, pheromones, trackedType):
+    strength_sum = 0
+
+    for pheromone in pheromones:
+        if pheromone.type == trackedType:
+            strength_sum += pheromone.strength# / max(                1.0, pheromone.position.distanceToObject(startingPosition))
+
+    return strength_sum
