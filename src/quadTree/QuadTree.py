@@ -50,16 +50,24 @@ class QuadTree:
         width, height = self.boundary.width / 2, self.boundary.height / 2
 
         self.upperLeft = QuadTree(
-            Rectangle(xCenter - width / 2, yCenter - height / 2, width, height), self.max_points, self.depth + 1
+            Rectangle(xCenter - width / 2, yCenter - height / 2, width, height),
+            self.max_points,
+            self.depth + 1,
         )
         self.upperRight = QuadTree(
-            Rectangle(xCenter + width / 2, yCenter - height / 2, width, height), self.max_points, self.depth + 1
+            Rectangle(xCenter + width / 2, yCenter - height / 2, width, height),
+            self.max_points,
+            self.depth + 1,
         )
         self.bottomRight = QuadTree(
-            Rectangle(xCenter + width / 2, yCenter + height / 2, width, height), self.max_points, self.depth + 1
+            Rectangle(xCenter + width / 2, yCenter + height / 2, width, height),
+            self.max_points,
+            self.depth + 1,
         )
         self.bottomLeft = QuadTree(
-            Rectangle(xCenter - width / 2, yCenter + height / 2, width, height), self.max_points, self.depth + 1
+            Rectangle(xCenter - width / 2, yCenter + height / 2, width, height),
+            self.max_points,
+            self.depth + 1,
         )
         self.divided = True
 
@@ -107,7 +115,9 @@ class QuadTree:
             self.bottomLeft.query(boundary, found_objects)
         return found_objects
 
-    def query_circle(self, boundary, centre, radius, found_objects, findAmount=999999, pop=False):
+    def query_circle(
+        self, boundary, centre, radius, found_objects, findAmount=999999, pop=False
+    ):
         """Find the points in the quadtree that lie within radius of centre.
 
         boundary is a Rect object (a square) that bounds the search circle.
@@ -120,7 +130,11 @@ class QuadTree:
         pointsToDelete = []
         for objectA in self.points:
             point = objectA.position
-            if boundary.contains(point) and point.distanceToObject(Position(centre[0], centre[1])) <= radius and findAmount > 0:
+            if (
+                boundary.contains(point)
+                and point.distanceToObject(Position(centre[0], centre[1])) <= radius
+                and findAmount > 0
+            ):
                 findAmount -= 1
                 found_objects.append(objectA)
                 if pop:
@@ -129,13 +143,20 @@ class QuadTree:
         for objectA in pointsToDelete:
             self.points.remove(objectA)
 
-
         # Recurse the search into this node's children.
         if self.divided and findAmount > 0:
-            self.upperLeft.query_circle(boundary, centre, radius, found_objects, findAmount, pop)
-            self.upperRight.query_circle(boundary, centre, radius, found_objects, findAmount, pop)
-            self.bottomRight.query_circle(boundary, centre, radius, found_objects, findAmount, pop)
-            self.bottomLeft.query_circle(boundary, centre, radius, found_objects, findAmount, pop)
+            self.upperLeft.query_circle(
+                boundary, centre, radius, found_objects, findAmount, pop
+            )
+            self.upperRight.query_circle(
+                boundary, centre, radius, found_objects, findAmount, pop
+            )
+            self.bottomRight.query_circle(
+                boundary, centre, radius, found_objects, findAmount, pop
+            )
+            self.bottomLeft.query_circle(
+                boundary, centre, radius, found_objects, findAmount, pop
+            )
         return found_objects
 
     def query_radius(self, centre, radius, found_objects, findAmount=999999, pop=False):
@@ -143,7 +164,9 @@ class QuadTree:
 
         # First find the square that bounds the search circle as a Rect object.
         boundary = Rectangle(*centre, 2 * radius, 2 * radius)
-        return self.query_circle(boundary, centre, radius, found_objects, findAmount=999999, pop=False)
+        return self.query_circle(
+            boundary, centre, radius, found_objects, findAmount=999999, pop=False
+        )
 
     def __len__(self):
         """Return the number of points in the quadtree."""

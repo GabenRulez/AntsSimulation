@@ -154,7 +154,9 @@ def drawNest():
 
 def drawFood():
     queriedFood = []
-    gameData["worldMap"].foods.query(gameData["worldMap"].boundary, found_objects=queriedFood)
+    gameData["worldMap"].foods.query(
+        gameData["worldMap"].boundary, found_objects=queriedFood
+    )
     for food in queriedFood:
         pygame.draw.circle(
             gameData["window"], mapColors["food"], (food.position.x, food.position.y), 2
@@ -162,7 +164,9 @@ def drawFood():
 
 
 def drawPheromones():
-    for pheromone in gameData["worldMap"].pheromones.query(gameData["worldMap"].boundary, found_objects=[]):
+    for pheromone in gameData["worldMap"].pheromones.query(
+        gameData["worldMap"].boundary, found_objects=[]
+    ):
         pheromoneStrength = min(pheromone.strength, 255)
         maxPheromoneStrength = 255
 
@@ -179,7 +183,7 @@ def drawPheromones():
         )
         r_0, g_0, b_0 = mapColors["map"][0], mapColors["map"][1], mapColors["map"][2]
 
-        '''
+        """
         pheromoneColor = (
             int(
                 float(
@@ -209,8 +213,8 @@ def drawPheromones():
                 )
             ),
         )
-        '''
-        pheromoneColor = (0,0,0)
+        """
+        pheromoneColor = (0, 0, 0)
 
         x = pheromone.position.x
         y = pheromone.position.y
