@@ -19,7 +19,7 @@ class Ant:
         self.direction = np.random.uniform(low=-np.pi, high=np.pi)
         self.walkingSpeed = 10
 
-        self.seeing_radius = 100
+        self.seeing_radius = 200
         self.seeing_angle = 150
 
         self.eating_radius = 10
@@ -73,12 +73,29 @@ class Ant:
 
         # Search in 3 circular sector shapes: on the left, in front of and on the right.
         # Choose direction which has the most pheromones.
-        detectedLeftPheromones = self.worldMap.getPheromonesInCircularSector(
-            self.position,
-            self.direction - self.seeing_angle / 3,
-            self.seeing_radius,
-            self.seeing_angle / 3,
-        )
+
+        temp_x, temp_y = self.position.x, self.position.y
+        temp_dir = self.direction
+        a = np.sin(np.radians(self.seeing_angle/6)) * self.seeing_radius
+
+        frontSensorPosition_x   = temp_x + np.cos(temp_dir) * self.seeing_radius - a/2
+        frontSensorPosition_y   = temp_y + np.sin(temp_dir) * self.seeing_radius - a/2
+        leftSensorPosition_x    = temp_x + np.cos(temp_dir + np.radians(self.seeing_angle)/3) * self.seeing_radius - a / 2
+        leftSensorPosition_y    = temp_y + np.sin(temp_dir + np.radians(self.seeing_angle)/3) * self.seeing_radius - a / 2
+        rightSensorPosition_x   = temp_x + np.cos(temp_dir - np.radians(self.seeing_angle)/3) * self.seeing_radius - a / 2
+        rightSensorPosition_y   = temp_y + np.sin(temp_dir - np.radians(self.seeing_angle)/3) * self.seeing_radius - a / 2
+
+
+
+        detectedLeftPheromones = self.worldMap.getPheromonesInCircle(Position.Position(leftSensorPosition_x, leftSensorPosition_y), a/2)
+        detectedRightPheromones = self.worldMap.getPheromonesInCircle(
+            Position.Position(rightSensorPosition_x, rightSensorPosition_y), a / 2)
+        detectedFrontPheromones = self.worldMap.getPheromonesInCircle(
+            Position.Position(frontSensorPosition_x, frontSensorPosition_y), a / 2)
+
+        '''
+        detectedLeftPheromones = self.worldMap.pheromones.query_radius((self.position.x, self.position.y), self.seeing_radius, found_objects=[])
+
         detectedFrontPheromones = self.worldMap.getPheromonesInCircularSector(
             self.position, self.direction, self.seeing_radius, self.seeing_angle / 3
         )
@@ -88,8 +105,8 @@ class Ant:
             self.seeing_radius,
             self.seeing_angle / 3,
         )
-
-        # Calculate the "center of strength" (center of mass) of the pheromones. Filter by your state ("holding_food").
+        '''
+        '''# Calculate the "center of strength" (center of mass) of the pheromones. Filter by your state ("holding_food").'''
         leftPheromonesStrength = calculatePheromonesStrength(
             startingPosition=self.position,
             pheromones=detectedLeftPheromones,
@@ -161,7 +178,7 @@ class Ant:
             self.walkingSpeed * math.sin(moveDirection),
         )
         self.worldMap.limitAntPosition(self)
-        # self.worldMap.leapAntPosition(self)
+        #self.worldMap.leapAntPosition(self)
         self.direction = moveDirection
 
         # wywołaj move na mapie
