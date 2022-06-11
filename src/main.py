@@ -40,7 +40,7 @@ gameData = {
     "sideMenuWidth": 0,  # 256,
     "mapHeight": 1080,  # 720,
     "window": None,
-    "startingAntsAmount": 100,
+    "startingAntsAmount": 25,
 }
 
 
@@ -61,7 +61,7 @@ def setup():
     gameData["worldMap"] = worldMap
 
     nestPosition = Position(
-        gameData["mapWidth"] / 10 * 3, gameData["mapHeight"] / 10 * 3
+        float(gameData["mapWidth"]) / 10 * 3, float(gameData["mapHeight"]) / 10 * 3
     )
     gameData["antsNest"] = Nest.Nest(nestPosition, 50, worldMap)
 
@@ -153,14 +153,16 @@ def drawNest():
 
 
 def drawFood():
-    for food in gameData["worldMap"].foods:
+    queriedFood = []
+    gameData["worldMap"].foods.query(gameData["worldMap"].boundary, found_objects=queriedFood)
+    for food in queriedFood:
         pygame.draw.circle(
             gameData["window"], mapColors["food"], (food.position.x, food.position.y), 2
         )
 
 
 def drawPheromones():
-    for pheromone in gameData["worldMap"].pheromones:
+    for pheromone in gameData["worldMap"].pheromones.query(gameData["worldMap"].boundary, found_objects=[]):
         pheromoneStrength = min(pheromone.strength, 255)
         maxPheromoneStrength = 255
 
@@ -177,6 +179,7 @@ def drawPheromones():
         )
         r_0, g_0, b_0 = mapColors["map"][0], mapColors["map"][1], mapColors["map"][2]
 
+        '''
         pheromoneColor = (
             int(
                 float(
@@ -206,6 +209,8 @@ def drawPheromones():
                 )
             ),
         )
+        '''
+        pheromoneColor = (0,0,0)
 
         x = pheromone.position.x
         y = pheromone.position.y
@@ -217,7 +222,11 @@ def drawAnts():
     antRad = 5
 
     for ant in gameData["worldMap"].ants:
+
         antPosition = ant.position
+
+        # pygame.draw.circle(gameData["window"], mapColors["menu"], (antPosition.x, antPosition.y), ant.seeing_radius)
+
         pygame.draw.circle(
             gameData["window"], mapColors["ant"], (antPosition.x, antPosition.y), antRad
         )
