@@ -156,59 +156,15 @@ def drawPheromones():
     for pheromone in gameData["worldMap"].pheromones.query(
         gameData["worldMap"].boundary, found_objects=[]
     ):
-        pheromoneStrength = min(pheromone.strength, 255)
-        maxPheromoneStrength = 255
-
-        if pheromone.type == PheromoneType.TRAIL:
-            initialPheromoneColor = mapColors["trail_pheromone"]
+        if pheromone.type == PheromoneType.HOME:
+            colorA = pygame.Color(mapColors["trail_pheromone"])
 
         else:
-            initialPheromoneColor = mapColors["food_pheromone"]
+            colorA = pygame.Color(mapColors["food_pheromone"])
 
-        r, g, b = (
-            initialPheromoneColor[0],
-            initialPheromoneColor[1],
-            initialPheromoneColor[2],
-        )
-        r_0, g_0, b_0 = mapColors["map"][0], mapColors["map"][1], mapColors["map"][2]
+        finalColor = colorA.lerp(pygame.Color(mapColors["map"]), min(1.0 - pheromone.strength / pheromone.startingStrength, 1.0))       # TODO - pozbywaj sie pheromonow ktore maja 0 zycia, wtedy usun ten warunek min(, 1.0)
 
-        """
-        pheromoneColor = (
-            int(
-                float(
-                    (
-                        r * pheromoneStrength
-                        + r_0 * (maxPheromoneStrength - pheromoneStrength)
-                    )
-                    / maxPheromoneStrength
-                )
-            ),
-            int(
-                float(
-                    (
-                        g * pheromoneStrength
-                        + g_0 * (maxPheromoneStrength - pheromoneStrength)
-                    )
-                    / maxPheromoneStrength
-                )
-            ),
-            int(
-                float(
-                    (
-                        b * pheromoneStrength
-                        + b_0 * (maxPheromoneStrength - pheromoneStrength)
-                    )
-                    / maxPheromoneStrength
-                )
-            ),
-        )
-        """
-        pheromoneColor = (0, 0, 0)
-
-        x = pheromone.position.x
-        y = pheromone.position.y
-
-        pygame.draw.circle(gameData["window"], pheromoneColor, (x, y), 3)
+        pygame.draw.circle(gameData["window"], finalColor, pheromone.position.get(), 3)
 
 
 def drawAnts():
