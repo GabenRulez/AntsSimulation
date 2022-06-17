@@ -26,7 +26,9 @@ class Pheromone:
         )
 
 
-def calculateAveragePheromonePosition(pheromones, trackedType) -> Union[Pheromone, None]:
+def calculateAveragePheromonePosition(
+    pheromones, trackedType
+) -> Union[Pheromone, None]:
     # TODO It's not working "great", ants often get stuck looped into each other. Create another way of "deciding".
     x_sum = 0
     y_sum = 0

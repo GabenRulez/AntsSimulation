@@ -59,7 +59,9 @@ class WorldMap:
         # We query points "range/2" to the left and to the right.
         return queriedPheromones
 
-    def getPheromonesInCircle(self, startingPoint: Position.Position, range: float) -> list:
+    def getPheromonesInCircle(
+        self, startingPoint: Position.Position, range: float
+    ) -> list:
         queriedPheromones = []
         self.pheromones.query_radius(
             (startingPoint.x, startingPoint.y), range, found_objects=queriedPheromones
@@ -121,13 +123,15 @@ class WorldMap:
             )
             self.foods.insert(Food(food_position))
 
-    def getFoodInRadius(self, midpoint: Position.Position, radius: float) -> Union[Food, None]:
-        '''
+    def getFoodInRadius(
+        self, midpoint: Position.Position, radius: float
+    ) -> Union[Food, None]:
+        """
         Searches for the food around the `midpoint` position and if it finds any, it deletes it from the `QuadTree` structure and returns it.
         :param midpoint: The center of a circle that will be queried.
         :param radius: The radius of the queried circle.
         :return: The found `Food` object or `None` if there isn't any.
-        '''
+        """
         food = []
         if self.foods.query_radius(
             (midpoint.x, midpoint.y), radius, found_objects=food, findAmount=1, pop=True

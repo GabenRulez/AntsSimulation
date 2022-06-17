@@ -38,9 +38,9 @@ class Ant:
         )
 
     def update(self) -> None:
-        '''
+        """
         Life cycle function of the `Ant`. Triggered every simulation frame to let the `Ant` think, move, eat, etc.
-        '''
+        """
         self.tryToTakeFood()
         self.move(self.decide())
         self.lifeCounter += 1
@@ -133,40 +133,40 @@ class Ant:
             return self.direction + np.random.uniform(low=-np.pi / 8, high=np.pi / 8)
 
     def move(self, moveDirection) -> None:
-        '''
+        """
         Change the `Ant`'s position, by supplying the "move vector angle". The length of the vector will be `self.walkingSpeed`.
         :param moveDirection: The angle in radians.
-        '''
+        """
         self.position = self.position.pointAtAngle(moveDirection, self.walkingSpeed)
         self.worldMap.limitAntPosition(self)
         # self.worldMap.leapAntPosition(self)
         self.direction = moveDirection
 
     def mark_pheromones(self) -> None:
-        '''
+        """
         Function that marks with the correct type of `Pheromone` based on `Ant`'s `holding_food` state.
-        '''
+        """
         if self.holding_food:
             self.mark_food_trail()
         else:
             self.mark_return_trail()
 
     def mark_food_trail(self) -> None:
-        '''
+        """
         Triggers the `worldMap` to spawn a `FOOD` type pheromone at current position.
-        '''
+        """
         self.worldMap.addPheromones(Pheromone(PheromoneType.FOOD, self.position))
 
     def mark_return_trail(self) -> None:
-        '''
+        """
         Triggers the `worldMap` to spawn a `HOME` type pheromone at current position.
-        '''
+        """
         self.worldMap.addPheromones(Pheromone(PheromoneType.HOME, self.position))
 
     def tryToTakeFood(self) -> None:
-        '''
+        """
         Looks for food in a circle around the `Ant`. The radius is defined as `self.eating_radius`. If the food is found, the `Ant`'s state changes to `holding_food = True`.
-        '''
+        """
         # foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
         # if the foodToEat is not null - change your type to "carrying food= true"
         # else do nothing
@@ -176,7 +176,7 @@ class Ant:
             self.holding_food = True
 
     def putDownFood(self) -> None:
-        '''
+        """
         Changes the state of the `Ant` to `holding_food = False`.
-        '''
+        """
         self.holding_food = False
