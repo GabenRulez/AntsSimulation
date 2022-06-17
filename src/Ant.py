@@ -19,7 +19,10 @@ class Ant:
 
         self.eating_radius = 10
         self.holding_food = False
-        self.lifeCounter = 4
+
+        self.markingCycle = 4
+        self.lifeCounter = np.random.randint(self.markingCycle)
+
         self.worldMap = worldMap
 
     def __str__(self):
@@ -41,7 +44,8 @@ class Ant:
         self.tryToTakeFood()
         self.move(self.decide())
         self.lifeCounter += 1
-        if self.lifeCounter % 4 == 0:
+
+        if self.lifeCounter % self.markingCycle == 0:
             self.mark_pheromones()
 
     def decide(self) -> float:
