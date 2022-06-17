@@ -2,7 +2,7 @@ import math
 
 
 class Position:
-    def __init__(self, x, y):
+    def __init__(self, x: float, y: float):
         self.x = x
         self.y = y
 
@@ -12,9 +12,10 @@ class Position:
     def get(self):
         return (self.x, self.y)
 
-    def add(self, x, y):
-        self.x += x
-        self.y += y
+    def add(self, addedToX, addedToY):
+        self.x += addedToX
+        self.y += addedToY
+        return self
 
     def copy(self):
         return Position(self.x, self.y)
