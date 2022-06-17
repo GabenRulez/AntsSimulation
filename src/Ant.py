@@ -14,8 +14,8 @@ class Ant:
         self.direction = np.random.uniform(low=-np.pi, high=np.pi)
         self.walkingSpeed = 10
 
-        self.seeing_radius = 200
-        self.seeing_angle = 150
+        self.seeing_radius = 150
+        self.seeing_angle = 140
 
         self.eating_radius = 10
         self.holding_food = False

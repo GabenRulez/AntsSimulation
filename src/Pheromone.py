@@ -11,7 +11,7 @@ class Pheromone:
         self,
         pheromoneType: PheromoneType,
         position: Position,
-        startingStrength: int = 200,
+        startingStrength: int = 150,
     ):
         self.type = pheromoneType
         self.position = position

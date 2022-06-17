@@ -36,9 +36,9 @@ gameData = {
     "running": False,
     "clock": pygame.time.Clock(),
     "worldMap": WorldMap.WorldMap.emptyObject(),
-    "mapWidth": 1920,  # 876,
-    "sideMenuWidth": 0,  # 256,
-    "mapHeight": 1080,  # 720,
+    "mapWidth": 1920,
+    "sideMenuWidth": 0,
+    "mapHeight": 1080,
     "window": None,
     "startingAntsAmount": 100,
     "antsNest": Nest.Nest.emptyObject(),
@@ -65,7 +65,7 @@ def setup():
         float(gameData["mapWidth"]) / 10 * 3, float(gameData["mapHeight"]) / 10 * 3
     )
     gameData["antsNest"] = Nest.Nest(
-        nestPosition, 30, worldMap, gameData["startingAntsAmount"]
+        nestPosition, 75, worldMap, gameData["startingAntsAmount"]
     )
 
     worldMap.spawnFoodClump(
@@ -166,8 +166,8 @@ def drawPheromones():
 
         finalColor = colorA.lerp(
             pygame.Color(mapColors["map"]),
-            min(1.0 - pheromone.strength / pheromone.startingStrength, 1.0),
-        )  # TODO - pozbywaj sie pheromonow ktore maja 0 zycia, wtedy usun ten warunek min(, 1.0)
+            1.0 - pheromone.strength / pheromone.startingStrength,
+        )
 
         pygame.draw.circle(gameData["window"], finalColor, pheromone.position.get(), 3)
 
