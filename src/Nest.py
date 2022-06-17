@@ -42,4 +42,4 @@ class Nest:
             self.antsToSpawn -= 1
 
     def spawnAnt(self, amount=1):
-        self.worldMap.addAnt(Ant(self.position, self.worldMap))
+        self.worldMap.addAnt(Ant(self.position.copy(), self.worldMap))
