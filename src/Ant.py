@@ -69,12 +69,12 @@ class Ant:
             )
             if detectedFood is not None:
                 return self.position.angleToPoint(detectedFood.position)
-            pheromoneToTrack = PheromoneType.TRAIL
+            pheromoneToTrack = PheromoneType.FOOD
 
         # Search in 3 circular sector shapes: on the left, in front of and on the right.
         # Choose direction which has the most pheromones.
 
-        temp_x, temp_y = self.position.x, self.position.y
+        temp_x, temp_y = self.position.get()
         temp_dir = self.direction
         a = np.sin(np.radians(self.seeing_angle / 6)) * self.seeing_radius
 
@@ -221,7 +221,7 @@ class Ant:
             self.mark_return_trail()
 
     def mark_food_trail(self):
-        self.worldMap.addPheromones(Pheromone(PheromoneType.TRAIL, self.position))
+        self.worldMap.addPheromones(Pheromone(PheromoneType.FOOD, self.position))
         # Invoke when you have found food.
         # It will be used in order for other ants to find the food more optimally.
 
