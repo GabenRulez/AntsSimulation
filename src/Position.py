@@ -9,6 +9,9 @@ class Position:
     def __str__(self):
         return "<Position: x=" + str(self.x) + ", y=" + str(self.y) + ">"
 
+    def get(self):
+        return (self.x, self.y)
+
     def add(self, x, y):
         self.x += x
         self.y += y
