@@ -1,16 +1,11 @@
 import numpy as np
 import WorldMap
 from Pheromone import (
-    calculateAveragePheromonePosition,
     Pheromone,
     calculatePheromonesStrength,
 )
 import Position
-import math
 from PheromoneType import PheromoneType
-
-# sigma in normal distribution
-RANDOMNESS_SIGMA = 0.3
 
 
 class Ant:
@@ -40,13 +35,11 @@ class Ant:
         )
 
     def update(self) -> None:
-        # Na podstawie czy self.holding_food = True - wybierz kierunek do domu lub kierunek do jedzenia
-        # Rusz się self.move(kierunek)
-        # Spróbuj podnieść jedzenie
+        '''
+        Life cycle function of the `Ant`. Triggered every simulation frame to let the `Ant` think, move, eat, etc.
+        '''
         self.tryToTakeFood()
-        # Na podstawie tego, czy TERAZ masz jedzenie, stwórz odpowiedniego feromona
         self.move(self.decide())
-
         self.lifeCounter += 1
         if self.lifeCounter % 4 == 0:
             self.mark_pheromones()
@@ -69,180 +62,107 @@ class Ant:
             )
             if detectedFood is not None:
                 return self.position.angleToPoint(detectedFood.position)
-            pheromoneToTrack = PheromoneType.FOOD
+            else:
+                pheromoneToTrack = PheromoneType.FOOD
 
-        # Search in 3 circular sector shapes: on the left, in front of and on the right.
+        # Search in 3 circular shapes: on the left, in front of and on the right.
         # Choose direction which has the most pheromones.
 
-        temp_x, temp_y = self.position.get()
-        temp_dir = self.direction
         a = np.sin(np.radians(self.seeing_angle / 6)) * self.seeing_radius
 
-        frontSensorPosition_x = temp_x + np.cos(temp_dir) * self.seeing_radius - a / 2
-        frontSensorPosition_y = temp_y + np.sin(temp_dir) * self.seeing_radius - a / 2
-        leftSensorPosition_x = (
-            temp_x
-            + np.cos(temp_dir + np.radians(self.seeing_angle) / 3) * self.seeing_radius
-            - a / 2
+        frontSensorAngle = self.direction
+        frontSensorPosition = self.position.pointAtAngle(
+            frontSensorAngle, self.seeing_radius
+        ).pointAtAngle(frontSensorAngle + np.pi, a / 2)
+        frontSensorPheromones = self.worldMap.getPheromonesInCircle(
+            frontSensorPosition, a / 2
         )
-        leftSensorPosition_y = (
-            temp_y
-            + np.sin(temp_dir + np.radians(self.seeing_angle) / 3) * self.seeing_radius
-            - a / 2
-        )
-        rightSensorPosition_x = (
-            temp_x
-            + np.cos(temp_dir - np.radians(self.seeing_angle) / 3) * self.seeing_radius
-            - a / 2
-        )
-        rightSensorPosition_y = (
-            temp_y
-            + np.sin(temp_dir - np.radians(self.seeing_angle) / 3) * self.seeing_radius
-            - a / 2
-        )
-
-        detectedLeftPheromones = self.worldMap.getPheromonesInCircle(
-            Position.Position(leftSensorPosition_x, leftSensorPosition_y), a / 2
-        )
-        detectedRightPheromones = self.worldMap.getPheromonesInCircle(
-            Position.Position(rightSensorPosition_x, rightSensorPosition_y), a / 2
-        )
-        detectedFrontPheromones = self.worldMap.getPheromonesInCircle(
-            Position.Position(frontSensorPosition_x, frontSensorPosition_y), a / 2
-        )
-
-        """
-        detectedLeftPheromones = self.worldMap.pheromones.query_radius((self.position.x, self.position.y), self.seeing_radius, found_objects=[])
-
-        detectedFrontPheromones = self.worldMap.getPheromonesInCircularSector(
-            self.position, self.direction, self.seeing_radius, self.seeing_angle / 3
-        )
-        detectedRightPheromones = self.worldMap.getPheromonesInCircularSector(
-            self.position,
-            self.direction + self.seeing_angle / 3,
-            self.seeing_radius,
-            self.seeing_angle / 3,
-        )
-        """
-        """# Calculate the "center of strength" (center of mass) of the pheromones. Filter by your state ("holding_food")."""
-        leftPheromonesStrength = calculatePheromonesStrength(
+        frontSensorStrength = calculatePheromonesStrength(
             startingPosition=self.position,
-            pheromones=detectedLeftPheromones,
+            pheromones=frontSensorPheromones,
             trackedType=pheromoneToTrack,
         )
-        frontPheromonesStrength = calculatePheromonesStrength(
+
+        leftSensorAngle = frontSensorAngle + np.radians(self.seeing_angle) / 3
+        leftSensorPosition = self.position.pointAtAngle(
+            leftSensorAngle, self.seeing_radius
+        ).pointAtAngle(leftSensorAngle + np.pi, a / 2)
+        leftSensorPheromones = self.worldMap.getPheromonesInCircle(
+            leftSensorPosition, a / 2
+        )
+        leftSensorStrength = calculatePheromonesStrength(
             startingPosition=self.position,
-            pheromones=detectedFrontPheromones,
+            pheromones=leftSensorPheromones,
             trackedType=pheromoneToTrack,
         )
-        rightPheromonesStrength = calculatePheromonesStrength(
+
+        rightSensorAngle = frontSensorAngle - np.radians(self.seeing_angle) / 3
+        rightSensorPosition = self.position.pointAtAngle(
+            rightSensorAngle, self.seeing_radius
+        ).pointAtAngle(rightSensorAngle + np.pi, a / 2)
+        rightSensorPheromones = self.worldMap.getPheromonesInCircle(
+            rightSensorPosition, a / 2
+        )
+        rightSensorStrength = calculatePheromonesStrength(
             startingPosition=self.position,
-            pheromones=detectedRightPheromones,
+            pheromones=rightSensorPheromones,
             trackedType=pheromoneToTrack,
         )
 
         if (
-            frontPheromonesStrength > leftPheromonesStrength
-            and frontPheromonesStrength > rightPheromonesStrength
+            frontSensorStrength > leftSensorStrength
+            and frontSensorStrength > rightSensorStrength
         ):
-            return self.direction + np.random.uniform(low=-np.pi / 16, high=np.pi / 16)
+            return frontSensorAngle + np.random.uniform(
+                low=-np.pi / 16, high=np.pi / 16
+            )
 
-        elif leftPheromonesStrength > rightPheromonesStrength:
-            return (
-                self.direction
-                - self.seeing_angle / 3
-                + np.random.uniform(low=-np.pi / 16, high=np.pi / 16)
+        elif leftSensorStrength > rightSensorStrength:
+            return leftSensorAngle + np.random.uniform(low=-np.pi / 16, high=np.pi / 16)
+
+        elif rightSensorStrength > leftSensorStrength:
+            return rightSensorAngle + np.random.uniform(
+                low=-np.pi / 16, high=np.pi / 16
             )
-        elif rightPheromonesStrength > leftPheromonesStrength:
-            return (
-                self.direction
-                + self.seeing_angle / 3
-                + np.random.uniform(low=-np.pi / 16, high=np.pi / 16)
-            )
+
         else:
             return self.direction + np.random.uniform(low=-np.pi / 8, high=np.pi / 8)
-        # centerOfPheromones = calculateAveragePheromonePosition(
-        #    detectedPheromones, pheromoneToTrack
-        # )
-
-        # if centerOfPheromones is not None:
-        #    weightedNormalDistributionSigma = (
-        #        RANDOMNESS_SIGMA / centerOfPheromones.strength
-        #    )
-        #    return (
-        #        np.random.normal(
-        #            self.position.angleToPoint(centerOfPheromones.position),
-        #            weightedNormalDistributionSigma,
-        #            1,
-        #        )
-        #        * math.pi
-        #    )
-
-        # else:
-        #    return self.direction + np.random.uniform(low=-np.pi / 8, high=np.pi / 8)
-        # Roll a dice and depending on the result:
-        # Go right
-        # Go left
-        # Go towards the center of trail pheromones (towards food)
-        # - this option should have the biggest chance of happening
-        # If you have food go towards the center of "return to base pheromones"
-
-        # Return the angle of "desired movement"
-        # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
 
     def move(self, moveDirection) -> None:
-        # self.position.add(
-        #    self.walkingSpeed * math.cos(moveDirection),
-        #    self.walkingSpeed * math.sin(moveDirection),
-        # )
+        '''
+        Change the `Ant`'s position, by supplying the "move vector angle". The length of the vector will be `self.walkingSpeed`.
+        :param moveDirection: The angle in radians.
+        '''
         self.position = self.position.pointAtAngle(moveDirection, self.walkingSpeed)
         self.worldMap.limitAntPosition(self)
         # self.worldMap.leapAntPosition(self)
         self.direction = moveDirection
 
-        # wywołaj move na mapie
-
-        # (Possible in the future) Check for obstacles on your path.
-
-        # Create a "move" vector depending on the "direction" and "walking_speed" constant.
-        # The "walking_speed" depends on whether the ant holds food.
-        # (Possible in the future) The "walking_speed" depends on the ant's age.
-        # (Possible in the future) The "walking_speed" depends on the angle of the terrain.
-        # (Possible in the future) The "walking_speed" depends on the wind.
-
-        # Spawn a "ReturnPheromone" or "FoodPheromone" depending on the current state of "holding_food".
-
-        # self.map.updateAntPosition(self, wantedPosition)
-        pass
-
     def mark_pheromones(self) -> None:
+        '''
+        Function that marks with the correct type of `Pheromone` based on `Ant`'s `holding_food` state.
+        '''
         if self.holding_food:
             self.mark_food_trail()
         else:
             self.mark_return_trail()
 
     def mark_food_trail(self) -> None:
+        '''
+        Triggers the `worldMap` to spawn a `FOOD` type pheromone at current position.
+        '''
         self.worldMap.addPheromones(Pheromone(PheromoneType.FOOD, self.position))
-        # Invoke when you have found food.
-        # It will be used in order for other ants to find the food more optimally.
-
-        # Spawn a "FoodPheromone" object.
-        # This object will have lifespan that will gradually go down until it disappears.
-
-        # self.map.addPheromone(typ ...
-        pass
 
     def mark_return_trail(self) -> None:
+        '''
+        Triggers the `worldMap` to spawn a `HOME` type pheromone at current position.
+        '''
         self.worldMap.addPheromones(Pheromone(PheromoneType.HOME, self.position))
-        # Invoke when you are looking for food.
-        # It will be used in order to find optimal return path to the nest.
-
-        # Spawn a "ReturnPheromone" object.
-        # This object will have lifespan that will gradually go down until it disappears.
-        # self.map.addPheromone(typ ...
-        pass
 
     def tryToTakeFood(self) -> None:
+        '''
+        Looks for food in a circle around the `Ant`. The radius is defined as `self.eating_radius`. If the food is found, the `Ant`'s state changes to `holding_food = True`.
+        '''
         # foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
         # if the foodToEat is not null - change your type to "carrying food= true"
         # else do nothing
@@ -252,4 +172,7 @@ class Ant:
             self.holding_food = True
 
     def putDownFood(self) -> None:
+        '''
+        Changes the state of the `Ant` to `holding_food = False`.
+        '''
         self.holding_food = False
