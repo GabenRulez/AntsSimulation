@@ -18,7 +18,7 @@ class Rectangle:
             self.bottomEdge,
         )
 
-    def contains(self, position: Position.Position):
+    def contains(self, position: Position.Position) -> bool:
         """Is a `position` inside the span of this Rectangle?"""
         return (
             self.leftEdge <= position.x < self.rightEdge

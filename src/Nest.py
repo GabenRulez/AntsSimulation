@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from Ant import Ant
 from Position import Position
 import WorldMap
@@ -18,7 +20,7 @@ class Nest:
         self.lifeCounter = 4
 
     @classmethod
-    def emptyObject(self):
+    def emptyObject(self) -> Nest:
         return Nest(None, None, None, None)
 
     def __str__(self):
@@ -26,20 +28,18 @@ class Nest:
             self.radius, self.position.__str__()
         )
 
-    def update(self):
-        # for every ant in radius - take it from the Map class
-        # execute ant.putDownFood()
+    def update(self) -> None:
         ants = self.worldMap.ants
         for ant in ants:
             if ant.holding_food:
                 if self.position.distanceToObject(ant.position) < self.radius:
                     ant.putDownFood()
-                    print(ant)
+                    print("Food delivered to the Nest by " + str(ant))
 
         self.lifeCounter += 1
         if self.lifeCounter % 4 == 0 and self.antsToSpawn > 0:
             self.spawnAnt(1)
             self.antsToSpawn -= 1
 
-    def spawnAnt(self, amount=1):
+    def spawnAnt(self, amount=1) -> None:
         self.worldMap.addAnt(Ant(self.position.copy(), self.worldMap))

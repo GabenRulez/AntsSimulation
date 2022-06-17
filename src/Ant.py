@@ -39,7 +39,7 @@ class Ant:
             self.position.__str__(),
         )
 
-    def update(self):
+    def update(self) -> None:
         # Na podstawie czy self.holding_food = True - wybierz kierunek do domu lub kierunek do jedzenia
         # Rusz się self.move(kierunek)
         # Spróbuj podnieść jedzenie
@@ -51,7 +51,7 @@ class Ant:
         if self.lifeCounter % 4 == 0:
             self.mark_pheromones()
 
-    def decide(self):
+    def decide(self) -> float:
         """
         Calculate an angle with a bit of randomness. Moving in this direction should yield a big chance of encountering the requested type of `Pheromones`.
         """
@@ -190,11 +190,12 @@ class Ant:
         # Return the angle of "desired movement"
         # Use this getPheromonesInCircularSector(self, startingPoint, direction, range)
 
-    def move(self, moveDirection):
-        self.position.add(
-            self.walkingSpeed * math.cos(moveDirection),
-            self.walkingSpeed * math.sin(moveDirection),
-        )
+    def move(self, moveDirection) -> None:
+        # self.position.add(
+        #    self.walkingSpeed * math.cos(moveDirection),
+        #    self.walkingSpeed * math.sin(moveDirection),
+        # )
+        self.position = self.position.pointAtAngle(moveDirection, self.walkingSpeed)
         self.worldMap.limitAntPosition(self)
         # self.worldMap.leapAntPosition(self)
         self.direction = moveDirection
@@ -214,13 +215,13 @@ class Ant:
         # self.map.updateAntPosition(self, wantedPosition)
         pass
 
-    def mark_pheromones(self):
+    def mark_pheromones(self) -> None:
         if self.holding_food:
             self.mark_food_trail()
         else:
             self.mark_return_trail()
 
-    def mark_food_trail(self):
+    def mark_food_trail(self) -> None:
         self.worldMap.addPheromones(Pheromone(PheromoneType.FOOD, self.position))
         # Invoke when you have found food.
         # It will be used in order for other ants to find the food more optimally.
@@ -231,7 +232,7 @@ class Ant:
         # self.map.addPheromone(typ ...
         pass
 
-    def mark_return_trail(self):
+    def mark_return_trail(self) -> None:
         self.worldMap.addPheromones(Pheromone(PheromoneType.HOME, self.position))
         # Invoke when you are looking for food.
         # It will be used in order to find optimal return path to the nest.
@@ -241,7 +242,7 @@ class Ant:
         # self.map.addPheromone(typ ...
         pass
 
-    def tryToTakeFood(self):
+    def tryToTakeFood(self) -> None:
         # foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
         # if the foodToEat is not null - change your type to "carrying food= true"
         # else do nothing
@@ -250,5 +251,5 @@ class Ant:
         if foodToEat:
             self.holding_food = True
 
-    def putDownFood(self):
+    def putDownFood(self) -> None:
         self.holding_food = False

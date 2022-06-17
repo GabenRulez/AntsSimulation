@@ -1,4 +1,7 @@
-import random
+from __future__ import annotations
+
+from typing import Union
+
 from Food import Food
 import Pheromone
 import Ant
@@ -19,7 +22,7 @@ class WorldMap:
         self.foods = QuadTree(self.boundary)
 
     @classmethod
-    def emptyObject(self):
+    def emptyObject(self) -> WorldMap:
         return WorldMap(0, 0)
 
     def __str__(self):
@@ -37,7 +40,7 @@ class WorldMap:
         direction: float,
         range: float,
         rangeAngle: float,
-    ):
+    ) -> list:
         queriedPheromones = []
         foundPheromones = []
         self.pheromones.query_radius(
@@ -56,17 +59,17 @@ class WorldMap:
         # We query points "range/2" to the left and to the right.
         return queriedPheromones
 
-    def getPheromonesInCircle(self, startingPoint: Position.Position, range: float):
+    def getPheromonesInCircle(self, startingPoint: Position.Position, range: float) -> list:
         queriedPheromones = []
         self.pheromones.query_radius(
             (startingPoint.x, startingPoint.y), range, found_objects=queriedPheromones
         )
         return queriedPheromones
 
-    def addPheromones(self, pheromone: Pheromone.Pheromone):
+    def addPheromones(self, pheromone: Pheromone.Pheromone) -> None:
         self.pheromones.insert(pheromone)
 
-    def updatePheromones(self):
+    def updatePheromones(self) -> None:
         pheromonesToDiscard = []
         foundPheromones = []
         self.pheromones.query(self.boundary, found_objects=foundPheromones)
@@ -80,11 +83,11 @@ class WorldMap:
         for pheromone in pheromonesToDiscard:
             pass  # self.pheromones.remove(pheromone)  # TODO do something
 
-    def addAnt(self, ant: Ant.Ant):
+    def addAnt(self, ant: Ant.Ant) -> None:
         self.ants.append(ant)
         # Update the structure
 
-    def limitAntPosition(self, ant: Ant.Ant):
+    def limitAntPosition(self, ant: Ant.Ant) -> None:
         # Limit the position by map borders.
         wantedPosition = ant.position
         realisticPosition = Position.Position(
@@ -99,7 +102,7 @@ class WorldMap:
             # ant.direction = np.random.uniform(low=-np.pi, high=np.pi)
         ant.position = realisticPosition
 
-    def leapAntPosition(self, ant: Ant.Ant):
+    def leapAntPosition(self, ant: Ant.Ant) -> None:
         """If an Ant went over the border, teleport it to the other side of the map."""
         wantedPosition = ant.position
         realisticPosition = Position.Position(
@@ -110,7 +113,7 @@ class WorldMap:
 
     def spawnFoodClump(
         self, position: Position.Position, amount: int, recoil: float = 25.0
-    ):
+    ) -> None:
         for _ in range(amount):
             food_position = position.copy().add(
                 np.random.uniform(low=-recoil, high=recoil),
@@ -118,7 +121,7 @@ class WorldMap:
             )
             self.foods.insert(Food(food_position))
 
-    def getFoodInRadius(self, midpoint: Position.Position, radius: float):
+    def getFoodInRadius(self, midpoint: Position.Position, radius: float) -> Union[list, None]:
         # return single piece of food and delete it from self.foods
         food = []
         if self.foods.query_radius(

@@ -1,3 +1,7 @@
+from __future__ import annotations
+
+from typing import Union
+
 from Position import Position
 from PheromoneType import PheromoneType
 
@@ -22,7 +26,7 @@ class Pheromone:
         )
 
 
-def calculateAveragePheromonePosition(pheromones, trackedType):
+def calculateAveragePheromonePosition(pheromones, trackedType) -> Union[Pheromone, None]:
     # TODO It's not working "great", ants often get stuck looped into each other. Create another way of "deciding".
     x_sum = 0
     y_sum = 0
@@ -45,7 +49,7 @@ def calculateAveragePheromonePosition(pheromones, trackedType):
         )
 
 
-def calculatePheromonesStrength(startingPosition, pheromones, trackedType):
+def calculatePheromonesStrength(startingPosition, pheromones, trackedType) -> float:
     strength_sum = 0
 
     for pheromone in pheromones:
