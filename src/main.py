@@ -137,19 +137,8 @@ def drawBackground():
 
 
 def drawNest():
-    ringWidth = 5
-    for i in range(gameData["antsNest"].radius // ringWidth):
-        if i % 2 == 0:
-            color = mapColors["nest_a"]
-        else:
-            color = mapColors["nest_b"]
-
-        pygame.draw.circle(
-            gameData["window"],
-            color,
-            (gameData["antsNest"].position.x, gameData["antsNest"].position.y),
-            gameData["antsNest"].radius - i * ringWidth,
-        )
+    nest = gameData["antsNest"]
+    pygame.draw.circle(gameData["window"], mapColors["nest"], nest.position.get(), nest.radius)
 
 
 def drawFood():
