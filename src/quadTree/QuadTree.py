@@ -99,20 +99,28 @@ class QuadTree:
             or self.bottomLeft.insert(object)
         )
 
-    def query(self, boundary, found_objects):
+    def query(self, boundary, found_objects, delete_condition_function=None):
         """Find the points in the quadtree that lie within boundary."""
+
+        objectsToDelete = []
 
         # Search this node's points to see if they lie within boundary ...
         for objectA in self.points:
             point = objectA.position
             if boundary.contains(point):
                 found_objects.append(objectA)
+                if delete_condition_function is not None and delete_condition_function(objectA):
+                    objectsToDelete.append(objectA)
+
+        for objectA in objectsToDelete:
+            self.points.remove(objectA)
+
         # ... and if this node has children, search them too.
         if self.divided:
-            self.upperLeft.query(boundary, found_objects)
-            self.upperRight.query(boundary, found_objects)
-            self.bottomRight.query(boundary, found_objects)
-            self.bottomLeft.query(boundary, found_objects)
+            self.upperLeft.query(boundary, found_objects, delete_condition_function=delete_condition_function)
+            self.upperRight.query(boundary, found_objects, delete_condition_function=delete_condition_function)
+            self.bottomRight.query(boundary, found_objects, delete_condition_function=delete_condition_function)
+            self.bottomLeft.query(boundary, found_objects, delete_condition_function=delete_condition_function)
         return found_objects
 
     def query_circle(
