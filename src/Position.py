@@ -41,9 +41,6 @@ class Position:
             else:
                 return 3 * math.pi / 2
 
-    def pointAtAngle(self, angle, distance):
-        diff_x = distance * math.cos(angle)
-        diff_y = distance * math.sin(angle)
     def pointAtAngle(self, angle: float, distance: float =1) -> Position:
 
         return Position(self.x + (distance * diff_x), self.y + (distance * diff_y))
