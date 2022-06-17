@@ -58,7 +58,10 @@ class Ant:
         # Otherwise, try to find a way to get closer to the food.
 
         if self.holding_food:
-            if self.position.distanceToObject(self.worldMap.nestPosition) < 75 + self.seeing_radius:
+            if (
+                self.position.distanceToObject(self.worldMap.nestPosition)
+                < 75 + self.seeing_radius
+            ):
                 return self.position.angleToPoint(self.worldMap.nestPosition)
             else:
                 pheromoneToTrack = PheromoneType.HOME
