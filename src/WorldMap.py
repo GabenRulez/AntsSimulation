@@ -47,9 +47,10 @@ class WorldMap:
         self.pheromones.insert(pheromone)
 
     def updatePheromones(self) -> None:
-        '''
+        """
         Iterate over the pheromones and decrease their strength. Delete those, whose strength is 0 or less.
-        '''
+        """
+
         def deleteOldPheromones(objectA: Pheromone):
             return objectA.strength <= 0
 
