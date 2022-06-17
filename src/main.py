@@ -148,7 +148,7 @@ def drawFood():
     )
     for food in queriedFood:
         pygame.draw.circle(
-            gameData["window"], mapColors["food"], (food.position.x, food.position.y), 2
+            gameData["window"], mapColors["food"], food.position.get(), 2
         )
 
 
