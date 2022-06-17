@@ -121,8 +121,13 @@ class WorldMap:
             )
             self.foods.insert(Food(food_position))
 
-    def getFoodInRadius(self, midpoint: Position.Position, radius: float) -> Union[list, None]:
-        # return single piece of food and delete it from self.foods
+    def getFoodInRadius(self, midpoint: Position.Position, radius: float) -> Union[Food, None]:
+        '''
+        Searches for the food around the `midpoint` position and if it finds any, it deletes it from the `QuadTree` structure and returns it.
+        :param midpoint: The center of a circle that will be queried.
+        :param radius: The radius of the queried circle.
+        :return: The found `Food` object or `None` if there isn't any.
+        '''
         food = []
         if self.foods.query_radius(
             (midpoint.x, midpoint.y), radius, found_objects=food, findAmount=1, pop=True
