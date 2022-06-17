@@ -11,6 +11,7 @@ class Pheromone:
     ):
         self.type = pheromoneType
         self.position = position
+        self.startingStrength = startingStrength
         self.strength = startingStrength
 
     def __str__(self):
