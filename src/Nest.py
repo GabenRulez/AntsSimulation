@@ -7,6 +7,9 @@ class Nest:
         self.position = position
         self.worldMap = worldMap
         self.radius = radius
+    @classmethod
+    def emptyObject(self):
+        return Nest(None, None, None, None)
 
     def __str__(self):
         return "<Nest: radius={0}, position={1}>".format(

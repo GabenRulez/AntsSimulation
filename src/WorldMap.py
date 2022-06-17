@@ -18,6 +18,10 @@ class WorldMap:
         self.ants = []
         self.foods = QuadTree(self.boundary)
 
+    @classmethod
+    def emptyObject(self):
+        return WorldMap(0, 0)
+
     def __str__(self):
         return "<WorldMap: width={0}, height={1}, pheromonesAmount={2}, antsAmount={3}, foodsAmount={4}>".format(
             self.width,

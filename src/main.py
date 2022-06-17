@@ -35,12 +35,13 @@ gameData = {
     "fps_limit": 60,
     "running": False,
     "clock": pygame.time.Clock(),
-    "worldMap": WorldMap.WorldMap(0, 0),
+    "worldMap": WorldMap.WorldMap.emptyObject(),
     "mapWidth": 1920,  # 876,
     "sideMenuWidth": 0,  # 256,
     "mapHeight": 1080,  # 720,
     "window": None,
     "startingAntsAmount": 25,
+    "antsNest": Nest.Nest.emptyObject()
 }
 
 
