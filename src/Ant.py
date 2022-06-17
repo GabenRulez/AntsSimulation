@@ -58,7 +58,10 @@ class Ant:
         # Otherwise, try to find a way to get closer to the food.
 
         if self.holding_food:
-            pheromoneToTrack = PheromoneType.HOME
+            if self.position.distanceToObject(self.worldMap.nestPosition) < 75 + self.seeing_radius:
+                return self.position.angleToPoint(self.worldMap.nestPosition)
+            else:
+                pheromoneToTrack = PheromoneType.HOME
         else:
             # If you can detect food, then this is the direction you should go. If you can't, then you should follow the pheromones.
             detectedFood = self.worldMap.getFoodInRadius(

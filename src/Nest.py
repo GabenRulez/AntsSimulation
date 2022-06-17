@@ -15,6 +15,8 @@ class Nest:
     ):
         self.position = position
         self.worldMap = worldMap
+        if self.worldMap is not None:
+            self.worldMap.nestPosition = self.position
         self.radius = radius
         self.antsToSpawn = antsToSpawn
         self.lifeCounter = 4

@@ -20,6 +20,7 @@ class WorldMap:
         self.pheromones = QuadTree(self.boundary)
         self.ants = []
         self.foods = QuadTree(self.boundary)
+        self.nestPosition = Position.Position(0, 0)
 
     @classmethod
     def emptyObject(self) -> WorldMap:
