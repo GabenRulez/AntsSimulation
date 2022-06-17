@@ -40,7 +40,7 @@ gameData = {
     "sideMenuWidth": 0,  # 256,
     "mapHeight": 1080,  # 720,
     "window": None,
-    "startingAntsAmount": 25,
+    "startingAntsAmount": 100,
     "antsNest": Nest.Nest.emptyObject(),
 }
 
@@ -65,7 +65,7 @@ def setup():
         float(gameData["mapWidth"]) / 10 * 3, float(gameData["mapHeight"]) / 10 * 3
     )
     gameData["antsNest"] = Nest.Nest(
-        nestPosition, 50, worldMap, gameData["startingAntsAmount"]
+        nestPosition, 30, worldMap, gameData["startingAntsAmount"]
     )
 
     worldMap.spawnFoodClump(
