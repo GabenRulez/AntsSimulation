@@ -170,7 +170,9 @@ class Ant:
         # foodToEat = self.map.getFoodInRadius(self, position:Position, radius:float)
         # if the foodToEat is not null - change your type to "carrying food= true"
         # else do nothing
-        foodToEat = self.worldMap.getFoodInRadius(self.position, self.eating_radius, pop=True)
+        foodToEat = self.worldMap.getFoodInRadius(
+            self.position, self.eating_radius, pop=True
+        )
 
         if foodToEat:
             self.holding_food = True
