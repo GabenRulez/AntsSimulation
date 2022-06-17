@@ -31,8 +31,9 @@ class Nest:
                     print(ant)
 
         self.lifeCounter += 1
-        if self.lifeCounter % 4 == 0:
-            self.spawnAnt()
+        if self.lifeCounter % 4 == 0 and self.antsToSpawn > 0:
+            self.spawnAnt(1)
+            self.antsToSpawn -= 1
 
-    def spawnAnt(self):
+    def spawnAnt(self, amount=1):
         self.worldMap.addAnt(Ant(self.position, self.worldMap))
