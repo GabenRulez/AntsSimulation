@@ -4,7 +4,13 @@ import WorldMap
 
 
 class Nest:
-    def __init__(self, position: Position, radius: float, worldMap: WorldMap.WorldMap, antsToSpawn: int=0):
+    def __init__(
+        self,
+        position: Position,
+        radius: float,
+        worldMap: WorldMap.WorldMap,
+        antsToSpawn: int = 0,
+    ):
         self.position = position
         self.worldMap = worldMap
         self.radius = radius

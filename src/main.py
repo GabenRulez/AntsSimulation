@@ -17,7 +17,7 @@ mapColors = {
     "trail_pheromone": (191, 172, 181),
     "food_pheromone": (182, 198, 73),
     "food": (218, 255, 125),
-    "ant": (23, 33, 33)
+    "ant": (23, 33, 33),
 }
 
 WIDTH, HEIGHT = 1920, 1080
@@ -41,7 +41,7 @@ gameData = {
     "mapHeight": 1080,  # 720,
     "window": None,
     "startingAntsAmount": 25,
-    "antsNest": Nest.Nest.emptyObject()
+    "antsNest": Nest.Nest.emptyObject(),
 }
 
 
@@ -64,7 +64,9 @@ def setup():
     nestPosition = Position(
         float(gameData["mapWidth"]) / 10 * 3, float(gameData["mapHeight"]) / 10 * 3
     )
-    gameData["antsNest"] = Nest.Nest(nestPosition, 50, worldMap, gameData["startingAntsAmount"])
+    gameData["antsNest"] = Nest.Nest(
+        nestPosition, 50, worldMap, gameData["startingAntsAmount"]
+    )
 
     worldMap.spawnFoodClump(
         Position(gameData["mapWidth"] / 10 * 7, gameData["mapHeight"] / 10 * 7),
@@ -136,7 +138,9 @@ def drawBackground():
 
 def drawNest():
     nest = gameData["antsNest"]
-    pygame.draw.circle(gameData["window"], mapColors["nest"], nest.position.get(), nest.radius)
+    pygame.draw.circle(
+        gameData["window"], mapColors["nest"], nest.position.get(), nest.radius
+    )
 
 
 def drawFood():
@@ -160,7 +164,10 @@ def drawPheromones():
         else:
             colorA = pygame.Color(mapColors["food_pheromone"])
 
-        finalColor = colorA.lerp(pygame.Color(mapColors["map"]), min(1.0 - pheromone.strength / pheromone.startingStrength, 1.0))       # TODO - pozbywaj sie pheromonow ktore maja 0 zycia, wtedy usun ten warunek min(, 1.0)
+        finalColor = colorA.lerp(
+            pygame.Color(mapColors["map"]),
+            min(1.0 - pheromone.strength / pheromone.startingStrength, 1.0),
+        )  # TODO - pozbywaj sie pheromonow ktore maja 0 zycia, wtedy usun ten warunek min(, 1.0)
 
         pygame.draw.circle(gameData["window"], finalColor, pheromone.position.get(), 3)
 
