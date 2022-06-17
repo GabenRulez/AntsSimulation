@@ -1,3 +1,5 @@
+from typing import Union
+
 import pygame
 
 # import pygame_textinput
@@ -39,7 +41,7 @@ gameData = {
     "mapWidth": 1920,
     "sideMenuWidth": 0,
     "mapHeight": 1080,
-    "window": None,
+    "window": Union[pygame.Surface, pygame.SurfaceType],
     "startingAntsAmount": 100,
     "antsNest": Nest.Nest.emptyObject(),
 }
@@ -65,12 +67,18 @@ def setup():
         float(gameData["mapWidth"]) / 10 * 3, float(gameData["mapHeight"]) / 10 * 3
     )
     gameData["antsNest"] = Nest.Nest(
-        nestPosition, 75, worldMap, gameData["startingAntsAmount"]
+        position=nestPosition,
+        radius=75,
+        worldMap=worldMap,
+        antsToSpawn=gameData["startingAntsAmount"],
     )
 
     worldMap.spawnFoodClump(
-        Position(gameData["mapWidth"] / 10 * 7, gameData["mapHeight"] / 10 * 7),
-        gameData["startingAntsAmount"] * 5,
+        position=Position(
+            gameData["mapWidth"] / 10 * 7, gameData["mapHeight"] / 10 * 7
+        ),
+        amount=gameData["startingAntsAmount"] * 5,
+        recoil=gameData["mapHeight"] / 20,
     )
 
     gameData["window"] = pygame.display.set_mode(

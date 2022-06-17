@@ -34,31 +34,6 @@ class WorldMap:
             len(self.foods),
         )
 
-    def getPheromonesInCircularSector(
-        self,
-        startingPoint: Position.Position,
-        direction: float,
-        range: float,
-        rangeAngle: float,
-    ) -> list:
-        queriedPheromones = []
-        foundPheromones = []
-        self.pheromones.query_radius(
-            (startingPoint.x, startingPoint.y), range, found_objects=foundPheromones
-        )
-        for pheromone in foundPheromones:
-            if pheromone.position.distanceToObject(startingPoint) <= range:
-                angleBetweenPoints = startingPoint.angleToPoint(pheromone.position)
-                if (
-                    angleBetweenPoints >= direction - rangeAngle / 2
-                    and angleBetweenPoints <= direction + rangeAngle / 2
-                ):
-                    queriedPheromones.append(pheromone)
-
-        # "direction" is a direction the ant is looking at.
-        # We query points "range/2" to the left and to the right.
-        return queriedPheromones
-
     def getPheromonesInCircle(
         self, startingPoint: Position.Position, range: float
     ) -> list:
@@ -72,6 +47,9 @@ class WorldMap:
         self.pheromones.insert(pheromone)
 
     def updatePheromones(self) -> None:
+        '''
+        Iterate over the pheromones and decrease their strength. Delete those, whose strength is 0 or less.
+        '''
         def deleteOldPheromones(objectA: Pheromone):
             return objectA.strength <= 0
 
@@ -84,17 +62,12 @@ class WorldMap:
         )
         for pheromone in foundPheromones:
             pheromone.strength -= 1
+
             if pheromone.strength <= 0:
                 pheromonesToDiscard.append(pheromone)
-            # Walk over all pheromones and update their strength.
-            # Later we can change their position.
-
-        for pheromone in pheromonesToDiscard:
-            pass  # self.pheromones.remove(pheromone)  # TODO do something
 
     def addAnt(self, ant: Ant.Ant) -> None:
         self.ants.append(ant)
-        # Update the structure
 
     def limitAntPosition(self, ant: Ant.Ant) -> None:
         # Limit the position by map borders.
