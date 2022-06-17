@@ -169,31 +169,10 @@ def drawPheromones():
 
 def drawAnts():
     antRad = 5
-
     for ant in gameData["worldMap"].ants:
-
-        antPosition = ant.position
-
         # pygame.draw.circle(gameData["window"], mapColors["menu"], (antPosition.x, antPosition.y), ant.seeing_radius)
-
         pygame.draw.circle(
-            gameData["window"], mapColors["ant"], (antPosition.x, antPosition.y), antRad
-        )
-
-        headPosition = antPosition.pointAtAngle(ant.direction, antRad * (2 / 3))
-        pygame.draw.circle(
-            gameData["window"],
-            mapColors["ant"],
-            (headPosition.x, headPosition.y),
-            antRad,
-        )
-
-        backPosition = antPosition.pointAtAngle(ant.direction, -antRad * (2 / 3))
-        pygame.draw.circle(
-            gameData["window"],
-            mapColors["ant"],
-            (backPosition.x, backPosition.y),
-            antRad,
+            gameData["window"], mapColors["ant"], ant.position.get(), antRad
         )
 
 
