@@ -64,10 +64,7 @@ def setup():
     nestPosition = Position(
         float(gameData["mapWidth"]) / 10 * 3, float(gameData["mapHeight"]) / 10 * 3
     )
-    gameData["antsNest"] = Nest.Nest(nestPosition, 50, worldMap)
-
-    for _ in range(gameData["startingAntsAmount"]):
-        worldMap.addAnt(Ant(nestPosition, worldMap))
+    gameData["antsNest"] = Nest.Nest(nestPosition, 50, worldMap, gameData["startingAntsAmount"])
 
     worldMap.spawnFoodClump(
         Position(gameData["mapWidth"] / 10 * 7, gameData["mapHeight"] / 10 * 7),
