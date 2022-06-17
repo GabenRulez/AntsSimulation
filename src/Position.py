@@ -42,5 +42,11 @@ class Position:
                 return 3 * math.pi / 2
 
     def pointAtAngle(self, angle: float, distance: float =1) -> Position:
+        ''' Calculates a new point based on `self` origins, an angle and a distance values.
 
-        return Position(self.x + (distance * diff_x), self.y + (distance * diff_y))
+        :param angle: Vector angle in radians.
+        :param distance: Length of the vector.
+        :return: Newly calculated `Position` object.
+        '''
+
+        return Position(self.x + (distance * math.cos(angle)), self.y + (distance * math.sin(angle)))
