@@ -127,7 +127,7 @@ class WorldMap:
             self.foods.insert(Food(food_position))
 
     def getFoodInRadius(
-        self, midpoint: Position.Position, radius: float
+        self, midpoint: Position.Position, radius: float, pop: bool = False
     ) -> Union[Food, None]:
         """
         Searches for the food around the `midpoint` position and if it finds any, it deletes it from the `QuadTree` structure and returns it.
@@ -137,7 +137,7 @@ class WorldMap:
         """
         food = []
         if self.foods.query_radius(
-            (midpoint.x, midpoint.y), radius, found_objects=food, findAmount=1, pop=True
+            (midpoint.x, midpoint.y), radius, found_objects=food, findAmount=1, pop=pop
         ):
             return food[0]
         return None

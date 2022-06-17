@@ -173,7 +173,7 @@ class QuadTree:
         # First find the square that bounds the search circle as a Rect object.
         boundary = Rectangle(*centre, 2 * radius, 2 * radius)
         return self.query_circle(
-            boundary, centre, radius, found_objects, findAmount=999999, pop=False
+            boundary, centre, radius, found_objects, findAmount=findAmount, pop=pop
         )
 
     def __len__(self):
