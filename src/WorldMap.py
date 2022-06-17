@@ -93,7 +93,7 @@ class WorldMap:
         )
         if (
             realisticPosition.x != wantedPosition.x
-            and realisticPosition.y != wantedPosition.y
+            or realisticPosition.y != wantedPosition.y
         ):
             ant.direction = wantedPosition.angleToPoint(realisticPosition)
             # ant.direction = np.random.uniform(low=-np.pi, high=np.pi)
