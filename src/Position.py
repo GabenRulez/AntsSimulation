@@ -16,6 +16,9 @@ class Position:
         self.x += x
         self.y += y
 
+    def copy(self):
+        return Position(self.x, self.y)
+
     def distanceToObject(self, otherPosition):
         return math.dist([self.x, self.y], [otherPosition.x, otherPosition.y])
 

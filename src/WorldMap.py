@@ -112,10 +112,7 @@ class WorldMap:
         self, position: Position.Position, amount: int, recoil: float = 25.0
     ):
         for _ in range(amount):
-            food_x = position.x + np.random.uniform(low=-recoil, high=recoil)
-            food_y = position.y + np.random.uniform(low=-recoil, high=recoil)
-
-            food_position = Position.Position(food_x, food_y)
+            food_position = position.copy().add(np.random.uniform(low=-recoil, high=recoil), np.random.uniform(low=-recoil, high=recoil))
             self.foods.insert(Food(food_position))
 
     def getFoodInRadius(self, midpoint: Position.Position, radius: float):
