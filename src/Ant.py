@@ -174,6 +174,7 @@ class Ant:
 
         if foodToEat:
             self.holding_food = True
+            self.direction += np.pi
 
     def putDownFood(self) -> None:
         """
