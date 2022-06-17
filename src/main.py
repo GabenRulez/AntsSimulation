@@ -10,14 +10,14 @@ from PheromoneType import PheromoneType
 
 
 mapColors = {
-    "map": (102, 255, 179),
-    "menu": (102, 102, 102),
-    "nest_a": (0, 128, 64),
-    "nest_b": (40, 168, 104),
-    "food": (127, 176, 105),
-    "ant": (0, 0, 0),
-    "trail_pheromone": (255, 153, 0),
-    "food_pheromone": (0, 0, 255),
+    "extra": (229, 208, 204),
+    "background": (23, 33, 33),
+    "map": (127, 123, 130),
+    "nest": (68, 69, 84),
+    "trail_pheromone": (191, 172, 181),
+    "food_pheromone": (182, 198, 73),
+    "food": (218, 255, 125),
+    "ant": (23, 33, 33)
 }
 
 WIDTH, HEIGHT = 1920, 1080
