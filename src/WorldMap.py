@@ -77,7 +77,11 @@ class WorldMap:
 
         pheromonesToDiscard = []
         foundPheromones = []
-        self.pheromones.query(self.boundary, found_objects=foundPheromones, delete_condition_function=deleteOldPheromones)
+        self.pheromones.query(
+            self.boundary,
+            found_objects=foundPheromones,
+            delete_condition_function=deleteOldPheromones,
+        )
         for pheromone in foundPheromones:
             pheromone.strength -= 1
             if pheromone.strength <= 0:

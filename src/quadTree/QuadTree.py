@@ -109,7 +109,9 @@ class QuadTree:
             point = objectA.position
             if boundary.contains(point):
                 found_objects.append(objectA)
-                if delete_condition_function is not None and delete_condition_function(objectA):
+                if delete_condition_function is not None and delete_condition_function(
+                    objectA
+                ):
                     objectsToDelete.append(objectA)
 
         for objectA in objectsToDelete:
@@ -117,10 +119,26 @@ class QuadTree:
 
         # ... and if this node has children, search them too.
         if self.divided:
-            self.upperLeft.query(boundary, found_objects, delete_condition_function=delete_condition_function)
-            self.upperRight.query(boundary, found_objects, delete_condition_function=delete_condition_function)
-            self.bottomRight.query(boundary, found_objects, delete_condition_function=delete_condition_function)
-            self.bottomLeft.query(boundary, found_objects, delete_condition_function=delete_condition_function)
+            self.upperLeft.query(
+                boundary,
+                found_objects,
+                delete_condition_function=delete_condition_function,
+            )
+            self.upperRight.query(
+                boundary,
+                found_objects,
+                delete_condition_function=delete_condition_function,
+            )
+            self.bottomRight.query(
+                boundary,
+                found_objects,
+                delete_condition_function=delete_condition_function,
+            )
+            self.bottomLeft.query(
+                boundary,
+                found_objects,
+                delete_condition_function=delete_condition_function,
+            )
         return found_objects
 
     def query_circle(
