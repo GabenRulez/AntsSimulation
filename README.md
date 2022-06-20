@@ -28,20 +28,36 @@ graph LR;
 ```
  
  ### Example Results
+ <details> <summary>Examle simulation explained</summary>
 
  |![image](https://user-images.githubusercontent.com/56199675/174571534-e3425d10-a7f0-46f9-b77e-417337c8ae38.png)| ![image](https://user-images.githubusercontent.com/56199675/174571600-eb477d41-0599-4304-82b7-535e2f32a994.png)|
   |---|---|
  |1. Initial chaos|2. First track forming|
  |![image](https://user-images.githubusercontent.com/56199675/174571861-0b074579-7adf-447a-a720-07bdc6b53c9c.png)|![image](https://user-images.githubusercontent.com/56199675/174572175-d86e8a03-31c0-4570-8422-545448f00ec7.png)|
- |3. First track is moving to get shorter. <br> More psths are forming but they are not leading to the nest yet|4. Circuitous paths got connetced to the nest|
+ |3. First track is self-optimizing to get shorter. <br> More paths are forming but they are not leading to the nest yet|4. All the paths got connetced to the nest|
  |![image](https://user-images.githubusercontent.com/56199675/174572865-579437b9-6cd8-4fb6-9d1c-5b1cbf9a8fbb.png)|![image](https://user-images.githubusercontent.com/56199675/174573657-7ee17bbd-1197-495d-9962-021d86d83c33.png)|
- |5. Paths keep getting straigher and shorter|6. |
+ |5. Paths keep getting straigher and shorter|6. Paths are almost ready but since some ants are still walking free their location is not stable yet.
 |![image](https://user-images.githubusercontent.com/56199675/174574295-902bf23c-8f9d-420b-92e6-7806e752854c.png)|![image](https://user-images.githubusercontent.com/56199675/174574849-553ab8e0-ce12-4589-94f4-11312fe45fb5.png)|
- |7.|8.|
+ |7. Pheromne map significantly more stable and durable. |8. Loop o rightgot slower to optimize distance|
 |![image](https://user-images.githubusercontent.com/56199675/174575705-c41b38dc-5b90-449b-a773-51829bf24931.png)|![image](https://user-images.githubusercontent.com/56199675/174576115-671c1bdf-bed1-49c2-849f-0e616558f651.png)|
- |9. |10.|
+ |9. The loop on righis at the point of the collapse|10.The whole food is collected|
+ </details>
  
- Possible world concepts:
+ <details>
+ <summary>Post-simulation ants behaviour</summary>
+  <h4> The behaviour of ants after collecting all the food </h4>
+  
+ Once all the food is collected the path are becoming forgotten starting with the longest one. If we keep the simmulation running we may even observe forming of so called "ant mill" [(wikipeda)](https://en.wikipedia.org/wiki/Ant_mill) which is apperaing close to the place of the picked loot - so in an area filled densly with pheromonses.
+ 
+ <img src="https://user-images.githubusercontent.com/56199675/174591378-3253670d-8a90-4122-84f5-242ba2ab2b3c.png" width=800/>
+ 
+In this case the distance travelled by ants is self-optimizing too, so the circle is collapsing towards ts center and then disapperaing 
+ 
+  <img src="https://user-images.githubusercontent.com/56199675/174592530-4878ac4e-df73-4d99-895d-f3afd37038cb.png" width=800/>
+</details>
+ 
+
+ ### Possible world concepts:
  - The world is 3D. It has depth and depending on this depth the ants go slower/faster.
  - The world has obstacles that ants can't get through.
  - The pheromones change their position based on the wind.
