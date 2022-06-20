@@ -29,11 +29,19 @@ graph LR;
  
  ### Example Results
 
- |Active tracks| Dying tracks|
- |---|---|
- |![image](https://user-images.githubusercontent.com/56199675/174561626-3a195fe7-6d99-488e-b0a7-02091aa6a3eb.png)|![image](https://user-images.githubusercontent.com/56199675/174570572-d1d48752-c38b-483e-9786-7b5e51cb5adc.png)|
-
-### Possible world concepts:
+ |![image](https://user-images.githubusercontent.com/56199675/174571534-e3425d10-a7f0-46f9-b77e-417337c8ae38.png)| ![image](https://user-images.githubusercontent.com/56199675/174571600-eb477d41-0599-4304-82b7-535e2f32a994.png)|
+  |---|---|
+ |1. Initial chaos|2. First track forming|
+ |![image](https://user-images.githubusercontent.com/56199675/174571861-0b074579-7adf-447a-a720-07bdc6b53c9c.png)|![image](https://user-images.githubusercontent.com/56199675/174572175-d86e8a03-31c0-4570-8422-545448f00ec7.png)|
+ |3. First track is moving to get shorter. <br> More psths are forming but they are not leading to the nest yet|4. Circuitous paths got connetced to the nest|
+ |![image](https://user-images.githubusercontent.com/56199675/174572865-579437b9-6cd8-4fb6-9d1c-5b1cbf9a8fbb.png)|![image](https://user-images.githubusercontent.com/56199675/174573657-7ee17bbd-1197-495d-9962-021d86d83c33.png)|
+ |5. Paths keep getting straigher and shorter|6. |
+|![image](https://user-images.githubusercontent.com/56199675/174574295-902bf23c-8f9d-420b-92e6-7806e752854c.png)|![image](https://user-images.githubusercontent.com/56199675/174574849-553ab8e0-ce12-4589-94f4-11312fe45fb5.png)|
+ |7.|8.|
+|![image](https://user-images.githubusercontent.com/56199675/174575705-c41b38dc-5b90-449b-a773-51829bf24931.png)|![image](https://user-images.githubusercontent.com/56199675/174576115-671c1bdf-bed1-49c2-849f-0e616558f651.png)|
+ |9. |10.|
+ 
+ Possible world concepts:
  - The world is 3D. It has depth and depending on this depth the ants go slower/faster.
  - The world has obstacles that ants can't get through.
  - The pheromones change their position based on the wind.
