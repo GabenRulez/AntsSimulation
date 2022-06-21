@@ -7,8 +7,15 @@ Project for "System Modelling and Simulation" ("Modelowanie i Symulacja Systemó
  
 ## Introduction
 Ant colonies use the sense of smell to coordinate tasks such as foraging for food, defense or brood care. 
-> Trail pheromone signals are particularly important in the context of foraging. When a forager has located a profitable food source and then returns to her nest, she deposits trail pheromones that guide nest mates to the same resource. <a href="#citation1">[1]</a>
-
+> Trail pheromone signals are particularly important in the context of foraging. When a forager has located a profitable food source and then returns to her nest, she deposits trail pheromones that guide nest mates to the same resource<a href="#citation1">[1]</a>.
+ 
+There are other types of "smells", such as "death pheromone", "home pheromone", "danger pheromone" and even some to differentiate between two different colonies of the same species of ants.
+ 
+Ant colony optimization algorithm tries to solve computational problems of "finding the best path". It's a probabilistic technique, so in comparison to stochastic algorithms like `Breadth-first search (BFS)` or `Depth-first search (DST)` in large graphs it should prove to be much faster. 
+It's modeled around simplified colony simulation of "ants," that is, agents with very simple basic capabilities which, to some extent, mimic the
+behavior of real ants<a href="#citation2">[2]</a>.
+ 
+ 
 ### Main world concepts:
  - The world is rectangular and two dimensional 🌍
  - Each ant thinks for itself and acts on it's own depending on: the random factor, the strength and type of pheromones in it's viscinity in front of them. 🧠
@@ -77,3 +84,4 @@ In this case the distance travelled by ants is self-optimizing too, so the circl
  
 #### Citations
  1. <div id="citation1">Morgan E.D. Trail pheromone of ants. Physiol. Entomol. 2009;34:1–17. doi: 10.1111/j.1365-3032.2008.00658.x.</div>
+ 2. <div id="citation2">M. Dorigo, V. Maniezzo, and A. Colorni, “The Ant System: Optimization by a Colony of Cooperating Agents,” IEEE Transactions on Systems, Man and Cybernetics, Part B, 26(1):29-42, 1996.</div>
