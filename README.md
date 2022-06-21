@@ -31,7 +31,7 @@ graph LR;
     B --->|NO| D(Track<br/><br/>FOOD<br/><br/>pheromone)
     C --->E(Divide your field of view into<br/>three circular sectors)
     D ---> E
-    E ---> F(Perform ranom move<br/>toward sector with the<br/>strongest pheromone track)
+    E ---> F(Perform a move towards <br/>the sector with the<br/>strongest pheromone track<br/>with a random variation)
  
  classDef orange fill:#fb8,stroke:#d74,stroke-width:2px, color:black;
      class sq,e green
@@ -75,6 +75,7 @@ In this case the distance travelled by ants is self-optimizing too, so the circl
  - The pheromones diffuse faster or slower depending on the temperature.
  - There are multiple nests (factions) of ants that don't cooperate with each other and prefer to stay separate.
  - Ants die when they're not in their nest for too long. They also change their choices depending on their own health.
+ - New ants are born if the situation is 
 
 ### Environment
  - Language: ![Python](https://www.python.org/) `3.10.3`
