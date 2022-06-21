@@ -4,6 +4,10 @@
 
 ## Project description
 Project for "System Modelling and Simulation" ("Modelowanie i Symulacja Systemów") course of Computer Science Master's major in AGH Academy of Science and Technology.
+ 
+## Introduction
+Ant colonies use the sense of smell to coordinate tasks such as foraging for food, defense or brood care. 
+> Trail pheromone signals are particularly important in the context of foraging. When a forager has located a profitable food source and then returns to her nest, she deposits trail pheromones that guide nest mates to the same resource. <a href="" onclick="document.getElementById('citation1').scrollIntoView()">[1]</a>
 
 ### Main world concepts:
  - The world is rectangular and two dimensional 🌍
@@ -68,3 +72,8 @@ In this case the distance travelled by ants is self-optimizing too, so the circl
 ### Environment
  - Language: ![Python](https://www.python.org/) `3.10.3`
  - Game engine: ![Pygame](https://www.pygame.org/wiki/about)
+
+
+ 
+#### Citations
+ - <div id="citation1">Morgan E.D. Trail pheromone of ants. Physiol. Entomol. 2009;34:1–17. doi: 10.1111/j.1365-3032.2008.00658.x.</div>
