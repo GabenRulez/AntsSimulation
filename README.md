@@ -1,6 +1,7 @@
 # AntsSimulation
 ## <i>Simulation of natural creation of tracks with pheromone-based communication.<i>
 
+![GIF simulation](https://github.com/antipainK/AntsSimulation/blob/0b28d533ab2413a175633ac2db77afa4c1ed9fa1/docs/recordedSimulation_960x540.gif)
 
 ## Project description
 Project for "System Modelling and Simulation" ("Modelowanie i Symulacja Systemów") course of Computer Science Master's major in AGH Academy of Science and Technology.
