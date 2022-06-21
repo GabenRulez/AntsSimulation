@@ -67,6 +67,12 @@ In this case the distance travelled by ants is self-optimizing too, so the circl
   <img src="https://user-images.githubusercontent.com/56199675/174592530-4878ac4e-df73-4d99-895d-f3afd37038cb.png" width=800/>
 </details>
  
+ 
+ ## Summary
+ 
+The main goal of the project has been accomplished. In most common use cases the swarm behaviour is modeled using one AI unit ("swarm leader"). We achieved analogous result in the environment, where each unit makes their own decisions based on their surroundings. 
+The performance of the simulation leaves a lot to be desired. The amount of ants on the screen as well as the lifespan of the pheromones directly influence the speed of acquiring more food. Dynamic structures used by Python make it difficult to create a multi-threaded version of the algorithm. Also the `pygame` engine unfortunately brings even more performance overhead. Nevertheless the simulation takes acceptable amount of time. 
+ 
 
  ### Possible world concepts:
  - The world is 3D. It has depth and depending on this depth the ants go slower/faster.
