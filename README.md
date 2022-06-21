@@ -18,9 +18,9 @@ behavior of real ants<a href="#citation2">[2]</a>.
  
 ### Main world concepts:
  - The world is rectangular and two dimensional 🌍
- - Each ant thinks for itself and acts on it's own depending on: the random factor, the strength and type of pheromones in it's viscinity in front of them. 🧠
+ - Each ant is a standalone agent, that thinks for itself and acts depending on: it's own state, the strength and type of pheromones in its viscinity and the random factor. 🧠
  - The ants target is to find food and get it back to their nest. 🍕
- - The ants leave traces of pheromones wherever they go ("return to base" pheromone). 🧭
+ - The ants leave traces of pheromones wherever they go ("return to base" or "food source" pheromones). 🧭
  - When an ant finds food source, it leaves traces of a different pheromone ("food source" pheromone). 🐜
 
  ### Algorithm of decision making
@@ -33,7 +33,7 @@ graph LR;
     D ---> E
     E ---> F(Perform ranom move<br/>toward sector with the<br/>strongest pheromone track)
  
- classDef orange fill:#fb8,stroke:#d74,stroke-width:2px;
+ classDef orange fill:#fb8,stroke:#d74,stroke-width:2px, color:black;
      class sq,e green
      class B orange
 ```
