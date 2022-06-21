@@ -79,6 +79,7 @@ In this case the distance travelled by ants is self-optimizing too, so the circl
 ### Environment
  - Language: ![Python](https://www.python.org/) `3.10.3`
  - Game engine: ![Pygame](https://www.pygame.org/wiki/about)
+ - Used libraries: ![numpy](https://pypi.org/project/numpy/)
 
 
  
